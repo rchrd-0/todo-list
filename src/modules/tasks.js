@@ -1,12 +1,12 @@
-const newTask = (id, name, desc, date, project, priority, completed) => {
+const taskFactory = (id, name, desc) => {
   return {
     id,
     name,
     desc,
-    date,
-    project,
-    priority,
-    completed,
+    // date,
+    // project,
+    // priority,
+    // completed,
   };
 };
 
@@ -21,4 +21,4 @@ const taskMaster = (() => {
   }
 })();
 
-export { newTask, taskMaster };
+export { taskFactory, taskMaster };
