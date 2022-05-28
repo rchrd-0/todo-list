@@ -18,7 +18,7 @@ const getTaskInfo = (id) => {
   const editTaskForm = document.querySelector('#edit-task-form');
   const editName = editTaskForm.querySelector('#task-name-edit');
   const editDescription = editTaskForm.querySelector('#task-description-edit');
-  const editDate = editTaskForm.querySelector('#task-description-edit');
+  const editDate = editTaskForm.querySelector('#task-date-edit');
 
   const thisTask = taskMaster.findTask(id);
   editName.value = thisTask.name;
@@ -44,6 +44,7 @@ const hideMenu = (btn) => {
       break;
     case 'edit-task':
       menu = document.querySelector('#edit-task-menu');
+      menu.dataset.taskId = null;
       break;
     // No default
   }

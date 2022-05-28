@@ -100,14 +100,32 @@ const createTask = () => {
   renderList();
 };
 
+const editTask = () => {
+  const editTaskForm = document.querySelector('#edit-task-form');
+  const { taskId } = editTaskForm.dataset;
+  const thisTask = taskMaster.findTask(taskId);
+  const taskName = document.querySelector('#task-name-edit').value;
+  const taskDescription = document.querySelector(
+    '#task-description-edit'
+  ).value;
+  const taskDate = document.querySelector('#task-date-edit').value;
+
+  thisTask.name = taskName;
+  thisTask.description = taskDescription;
+  thisTask.date = !taskDate ? null : parseISO(taskDate);
+  hideMenu('edit-task');
+  renderList();
+};
 
 const initializeButtonEvents = () => {
   const submitAddTask = document.querySelector('#submit-add');
   const showAddTask = document.querySelector('#show-add-task');
+  const submitEditTask = document.querySelector('#submit-edit');
   const cancelBtns = document.querySelectorAll('.cancel');
 
   showAddTask.addEventListener('click', showAdd);
   submitAddTask.addEventListener('click', createTask);
+  submitEditTask.addEventListener('click', editTask);
   cancelBtns.forEach((button) =>
     button.addEventListener('click', (e) => {
       hideMenu(e.target.dataset.menu);
