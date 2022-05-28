@@ -1,14 +1,14 @@
 import _ from 'lodash';
 
-const taskFactory = (id, name, description, date) => {
+const taskFactory = (id, name, description, date, completed = false) => {
   return {
     id,
     name,
     description,
     date,
+    completed
     // project,
     // priority,
-    // completed,
   };
 };
 
@@ -23,9 +23,9 @@ const taskMaster = (() => {
   }
   const remove = (id) => {
     const idNum = Number(id);
-    _.remove(read(), findTask(id));
+    _.remove(read(), findTask(idNum));
     read().forEach(task => {
-      if (task.id > id) {
+      if (task.id > idNum) {
         task.id -= 1;
       }
     })

@@ -15,6 +15,9 @@ const generateButtons = (elements, taskId) => {
       checkCircle.setAttribute('type', 'button');
       checkCircle.classList.add('item-check');
       checkCircle.dataset.taskId = taskId;
+      checkCircle.addEventListener('click', () =>
+        completeTask(checkCircle.dataset.taskId)
+      );
       elements[i].insertBefore(checkCircle, elements[i].firstElementChild);
     } else {
       // right
@@ -83,19 +86,28 @@ const createListItem = (task) => {
 
 const clearList = () => {
   const pendingTaskList = document.querySelector('#pending-task-list');
+  const completedTaskList = document.querySelector('#completed-task-list');
   while (pendingTaskList.childElementCount > 0) {
     pendingTaskList.removeChild(pendingTaskList.firstElementChild);
+  }
+  while (completedTaskList.childElementCount > 0) {
+    completedTaskList.removeChild(completedTaskList.firstElementChild);
   }
 };
 function renderList() {
   const pendingTaskList = document.querySelector('#pending-task-list');
+  const completedTaskList = document.querySelector('#completed-task-list');
   const taskList = taskMaster.read();
   clearList();
   taskList.forEach((task) => {
     const listItem = createListItem(task);
-    pendingTaskList.insertBefore(listItem, pendingTaskList.firstElementChild);
+    if (task.completed) {
+      completedTaskList.insertBefore(listItem, completedTaskList.firstElementChild);
+    } else {
+      pendingTaskList.insertBefore(listItem, pendingTaskList.firstElementChild);
+    }
   });
-};
+}
 
 function createTask() {
   const taskId = taskMaster.read().length;
@@ -109,7 +121,7 @@ function createTask() {
 
   hideMenu('add-task');
   renderList();
-};
+}
 
 function editTask() {
   const editTaskForm = document.querySelector('#edit-task-form');
@@ -126,13 +138,22 @@ function editTask() {
   thisTask.date = !taskDate ? null : parseISO(taskDate);
   hideMenu('edit-task');
   renderList();
-};
+}
 
 function removeTask(id) {
+  const editTaskForm = document.querySelector('#edit-task-form');
+  if (editTaskForm.dataset.taskId === id) {
+    hideMenu('edit-task');
+  }
   taskMaster.remove(id);
   renderList();
 }
 
+function completeTask(id) {
+  const thisTask = taskMaster.findTask(id);
+  thisTask.completed = !thisTask.completed;
+  renderList();
+}
 
 const initializeButtonEvents = () => {
   const submitAddTask = document.querySelector('#submit-add');

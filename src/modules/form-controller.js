@@ -78,8 +78,4 @@ const initializeForms = () => {
   setMinDate();
 };
 
-// const showEdit = () => {
-
-// }
-
 export { showAdd, hideMenu, initializeForms, showEdit };
