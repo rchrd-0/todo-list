@@ -1,8 +1,8 @@
-const taskFactory = (id, name, desc) => {
+const taskFactory = (id, name, description) => {
   return {
     id,
     name,
-    desc,
+    description,
     // date,
     // project,
     // priority,
