@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 const taskFactory = (id, name, description, date) => {
   return {
     id,
@@ -19,11 +21,21 @@ const taskMaster = (() => {
     const thisTask = read().find(item => item.id === idNum);
     return thisTask;
   }
+  const remove = (id) => {
+    const idNum = Number(id);
+    _.remove(read(), findTask(id));
+    read().forEach(task => {
+      if (task.id > id) {
+        task.id -= 1;
+      }
+    })
+  }
 
   return {
     push,
     read,
-    findTask
+    findTask,
+    remove,
   };
 })();
 

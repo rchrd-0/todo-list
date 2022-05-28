@@ -30,6 +30,10 @@ const generateButtons = (elements, taskId) => {
           button.addEventListener('click', () =>
             showEdit(button.dataset.taskId)
           );
+        } else {
+          button.addEventListener('click', () =>
+            removeTask(button.dataset.taskId)
+          );
         }
         itemButtons.appendChild(button);
       }
@@ -83,7 +87,7 @@ const clearList = () => {
     pendingTaskList.removeChild(pendingTaskList.firstElementChild);
   }
 };
-const renderList = () => {
+function renderList() {
   const pendingTaskList = document.querySelector('#pending-task-list');
   const taskList = taskMaster.read();
   clearList();
@@ -93,7 +97,7 @@ const renderList = () => {
   });
 };
 
-const createTask = () => {
+function createTask() {
   const taskId = taskMaster.read().length;
   const taskName = document.querySelector('#task-name-add').value;
   const taskDescription = document.querySelector('#task-description-add').value;
@@ -107,7 +111,7 @@ const createTask = () => {
   renderList();
 };
 
-const editTask = () => {
+function editTask() {
   const editTaskForm = document.querySelector('#edit-task-form');
   const { taskId } = editTaskForm.dataset;
   const thisTask = taskMaster.findTask(taskId);
@@ -123,6 +127,12 @@ const editTask = () => {
   hideMenu('edit-task');
   renderList();
 };
+
+function removeTask(id) {
+  taskMaster.remove(id);
+  renderList();
+}
+
 
 const initializeButtonEvents = () => {
   const submitAddTask = document.querySelector('#submit-add');
