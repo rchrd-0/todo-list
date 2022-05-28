@@ -1,3 +1,6 @@
+import { format } from 'date-fns';
+import { taskMaster } from './tasks';
+
 const insertTop = (menu) => {
   const menusSection = document.querySelector('#menus');
   menusSection.insertBefore(menu, menusSection.firstElementChild);
@@ -11,11 +14,36 @@ const showAdd = () => {
   insertTop(addTaskMenu);
 };
 
+const getTaskInfo = (id) => {
+  const editTaskForm = document.querySelector('#edit-task-form');
+  const editName = editTaskForm.querySelector('#task-name-edit');
+  const editDescription = editTaskForm.querySelector('#task-description-edit');
+  const editDate = editTaskForm.querySelector('#task-description-edit');
+
+  const thisTask = taskMaster.findTask(id);
+  editName.value = thisTask.name;
+  editDescription.value = thisTask.description;
+  editDate.value = (!thisTask.date) ? '' : format(thisTask.date, 'yyyy-MM-dd');
+}
+
+const showEdit = (id) => {
+  const showEditMenu = document.querySelector('#edit-task-menu');
+  const editTaskForm = showEditMenu.querySelector('form');
+  editTaskForm.dataset.taskId = id;
+  if (showEditMenu.classList.contains('display-none')) {
+    showEditMenu.classList.remove('display-none');
+  }
+  getTaskInfo(id);
+}
+
 const hideMenu = (btn) => {
   let menu;
   switch (btn) {
     case 'add-task':
       menu = document.querySelector('#add-task-menu');
+      break;
+    case 'edit-task':
+      menu = document.querySelector('#edit-task-menu');
       break;
     // No default
   }
@@ -25,8 +53,25 @@ const hideMenu = (btn) => {
   menu.classList.add('display-none');
 };
 
+const validateNameInput = (form) => {
+  const nameField = form.querySelector('input[name="name"]');
+  const submit = form.querySelector('.submit');
+  if (nameField.validity.valid) {
+    submit.removeAttribute('disabled');
+  } else {
+    submit.setAttribute('disabled', ' ');
+  }
+};
+
+const initializeForms = () => {
+  const allForms = document.querySelectorAll('form');
+  allForms.forEach((form) =>
+    form.addEventListener('input', () => validateNameInput(form))
+  );
+};
+
 // const showEdit = () => {
 
 // }
 
-export { showAdd, hideMenu };
+export { showAdd, hideMenu, initializeForms, showEdit };

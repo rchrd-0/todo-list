@@ -1,6 +1,6 @@
 import { parseISO, format } from 'date-fns';
 import { taskFactory, taskMaster } from './tasks';
-import { showAdd, hideMenu } from './form-controller';
+import { showAdd, showEdit, hideMenu, initializeForms } from './form-controller';
 
 const generateButtons = (elements, taskId) => {
   for (let i = 0; i < elements.length; i++) {
@@ -21,6 +21,9 @@ const generateButtons = (elements, taskId) => {
         button.setAttribute('type', 'button');
         button.classList.add(rightSideBtns[j]);
         button.dataset.taskId = taskId;
+        if (j === 0) {
+          button.addEventListener('click', (() => showEdit(button.dataset.taskId)))
+        }
         itemButtons.appendChild(button);
       }
       elements[i].append(itemButtons);
@@ -54,7 +57,7 @@ const createListItem = (task) => {
       header.textContent = task.name;
       para.textContent = task.description;
     } else {
-      header.textContent = (task.date) ? format(task.date, 'd MMM yyyy') : '';
+      header.textContent = task.date ? format(task.date, 'd MMM yyyy') : '';
       para.textContent = 'Project';
     }
     details.append(header, para);
@@ -67,8 +70,23 @@ const createListItem = (task) => {
   return taskItem;
 };
 
-const createTask = () => {
+const clearList = () => {
   const pendingTaskList = document.querySelector('#pending-task-list');
+  while (pendingTaskList.childElementCount > 0) {
+    pendingTaskList.removeChild(pendingTaskList.firstElementChild);
+  }
+}
+const renderList = () => {
+  const pendingTaskList = document.querySelector('#pending-task-list');
+  const taskList = taskMaster.read();
+  clearList();
+  taskList.forEach(task => {
+    const listItem = createListItem(task);
+    pendingTaskList.insertBefore(listItem, pendingTaskList.firstElementChild);
+  })
+}
+
+const createTask = () => {
   const taskId = taskMaster.read().length;
   const taskName = document.querySelector('#task-name-add').value;
   const taskDescription = document.querySelector('#task-description-add').value;
@@ -78,24 +96,10 @@ const createTask = () => {
   const newTask = taskFactory(taskId, taskName, taskDescription, date);
   taskMaster.push(newTask);
 
-  const newItem = createListItem(newTask);
-  pendingTaskList.insertBefore(newItem, pendingTaskList.firstElementChild);
+  hideMenu('add-task');
+  renderList();
 };
 
-const validateNameInput = (form) => {
-  const nameField = form.querySelector('input[name="name"]');
-  const submit = form.querySelector('.submit');
-  if (nameField.validity.valid) {
-    submit.removeAttribute('disabled');
-  } else {
-    submit.setAttribute('disabled', ' ');
-  }
-};
-
-const initializeForms = () => {
-  const addTaskForm = document.querySelector('#add-task-form');
-  addTaskForm.addEventListener('input', () => validateNameInput(addTaskForm));
-};
 
 const initializeButtonEvents = () => {
   const submitAddTask = document.querySelector('#submit-add');
@@ -104,9 +108,11 @@ const initializeButtonEvents = () => {
 
   showAddTask.addEventListener('click', showAdd);
   submitAddTask.addEventListener('click', createTask);
-  cancelBtns.forEach(button => button.addEventListener('click', ((e) => {
-    hideMenu(e.target.dataset.menu);
-  })))
+  cancelBtns.forEach((button) =>
+    button.addEventListener('click', (e) => {
+      hideMenu(e.target.dataset.menu);
+    })
+  );
 };
 
 const initializeUI = () => {

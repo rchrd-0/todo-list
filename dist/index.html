@@ -6,41 +6,118 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The Odin Project—Todo List</title>
     <link rel="stylesheet" href="./style.css" />
-    <script src="./main.js"></script>
+    <script src="./main.js" defer></script>
   </head>
   <body>
-    <nav>
-      <section id="home-nav">
-        <div>
-          <div class="nav-icon"></div>
-          <span>All</span>
-          <div class="nav-icon"></div>
-          <span>Inbox</span>
-          <div class="nav-icon"></div>
-          <span>Today</span>
-          <div class="nav-icon"></div>
-          <span>Next 7 Days</span>
+    <div id="main-container">
+
+      <nav>
+        <section id="home-nav">
+          <div>
+            <div class="nav-icon"></div>
+            <span>All</span>
+            <div class="nav-icon"></div>
+            <span>Inbox</span>
+            <div class="nav-icon"></div>
+            <span>Today</span>
+            <div class="nav-icon"></div>
+            <span>Next 7 Days</span>
+          </div>
+        </section>
+        <section id="project-nav">
+          <div id="project-header">
+            <h2>Projects</h2>
+          </div>
+        </section>
+      </nav>
+
+      <main id="main-display">
+
+        <section id="pending-tasks">
+          <header>
+            <h1>Inbox</h1>
+            <button type="button" id="show-add-task">Add task</button>
+          </header>
+          <div class="task-list" id="pending-task-list">
+            <!-- <div class="task-item">
+              <div class="left">
+                <button type="button" class="check">Check</button>
+                <div class="details">
+                  <h2>Name</h2>
+                  <p>Desc</p>
+                </div>
+              </div>
+              <div class="right">
+                <div class="details">
+                  <h2>Date</h2>
+                  <p>Project</p>
+                </div>
+                  <div class="item-buttons">
+                    <button type="button"></button>
+                    <button type="button"></button>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+        </section>
+
+        <section id="completed-tasks">
+          <header>Completed</header>
+          <div class="task-list" id="completed-task-list"></div>
+        </section>
+
+      </main>
+
+      <section id="menus">
+        <div id="add-task-menu">
+          <form id="add-task-form">
+            <input
+              type="text"
+              name="name"
+              id="task-name-add"
+              placeholder="Task name"
+              required
+            />
+            <textarea
+              form="add-task-form"
+              name="description"
+              id="task-description-add"
+              rows="4"
+              placeholder="Description"
+            ></textarea>
+            <input type="date" name="date" id="task-date-add">
+            <div class="menu-buttons">
+              <button type="button" id="submit-add" class="submit" disabled>Add</button>
+              <button type="button" class="cancel" data-menu="add-task">Cancel</button>
+            </div>
+          </form>
+        </div>
+        <div id="edit-task-menu">
+          <form id="edit-task-form" data-task-id="null">
+            <input
+              type="text"
+              name="name"
+              id="task-name-edit"
+              placeholder="Task name"
+              required
+            />
+            <textarea
+              form="edit-task-form"
+              name="description"
+              id="task-description-edit"
+              rows="4"
+              placeholder="Description"
+            ></textarea>
+            <input type="date" name="date" id="task-date-edit">
+            <div class="menu-buttons">
+              <button type="button" id="submit-edit" class="submit" disabled>Edit</button>
+              <button type="button" class="cancel" data-menu="edit-task">Cancel</button>
+            </div>
+          </form>
         </div>
       </section>
-      <section id="project-nav">
-        <div id="project-header">
-          <h2>Projects</h2>
-        </div>
-      </section>
-    </nav>
-    <main>
-      <section id="open-tasks">
-        <header>
-          <h1>Inbox</h1>
-        </header>
-        <div class="task-list"></div>
-      </section>
-      <section id="completed-tasks">
-        <header>Completed</header>
-        <div class="task-list"></div>
-      </section>
-    </main>
-    <section id="menus"></section>
+
+    </div>
     <footer></footer>
   </body>
 </html>
