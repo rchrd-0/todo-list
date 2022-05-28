@@ -1,5 +1,6 @@
 import { parseISO, format } from 'date-fns';
 import { taskFactory, taskMaster } from './tasks';
+import { showAdd, hideMenu } from './form-controller';
 
 const generateButtons = (elements, taskId) => {
   for (let i = 0; i < elements.length; i++) {
@@ -97,16 +98,20 @@ const initializeForms = () => {
 };
 
 const initializeButtonEvents = () => {
-  const submitAddTaskBtn = document.querySelector('#submit-add');
-  submitAddTaskBtn.addEventListener('click', createTask);
+  const submitAddTask = document.querySelector('#submit-add');
+  const showAddTask = document.querySelector('#show-add-task');
+  const cancelBtns = document.querySelectorAll('.cancel');
+
+  showAddTask.addEventListener('click', showAdd);
+  submitAddTask.addEventListener('click', createTask);
+  cancelBtns.forEach(button => button.addEventListener('click', ((e) => {
+    hideMenu(e.target.dataset.menu);
+  })))
 };
 
 const initializeUI = () => {
   initializeButtonEvents();
   initializeForms();
 };
-// const initializeDisplay = () => {
-
-// };
 
 export { initializeUI };
