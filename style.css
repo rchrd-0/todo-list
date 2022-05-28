@@ -1,6 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap");
 
-html, body, div, span, h1, h2, p, ul, li, a, button {
+html,
+body,
+div,
+span,
+h1,
+h2,
+p,
+ul,
+li,
+a {
   margin: 0;
   padding: 0;
   border: 0;
@@ -20,24 +29,35 @@ html {
 body {
   height: 100vh;
   display: flex;
-  flex-wrap: wrap;
-  font-family: 'Roboto', Helvetica, Arial, sans-serif
+  flex-direction: column;
+  font-family: "Roboto", Helvetica, Arial, sans-serif;
+}
+
+.display-none {
+  display: none;
 }
 
 /* High-level layout */
-nav {
-  width: 300px;
-  background-color: honeydew;
+#main-container {
+  display: flex;
+  width: 100vw;
+  height: calc(100vh - 40px);
 }
 
-main {
-  flex: 1;
-  height: calc(100vh - 40px);
+#main-display {
+  padding: 25px 30px;
+  width: 1000px;
+  flex-shrink: 0;
   background-color: grey;
 }
 
+nav {
+  flex: 0 0 300px;
+  background-color: honeydew;
+}
+
 #menus {
-  width: 300px;
+  flex: 1;
   background-color: navajowhite;
 }
 
@@ -46,4 +66,71 @@ footer {
   height: 40px;
   background-color: lightpink;
 }
+
+/* Task list display */
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Task items */
+
+.task-item {
+  padding: 10px;
+  border: 1px solid black;
+  display: flex;
+  justify-content: space-between;
+}
+
+.task-item > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.left {
+  flex: 1;
+}
+
+.right {
+  display: flex;
+  justify-content: flex-end;
+  width: 200px;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.task-item button {
+  width: 30px;
+  height: 30px;
+  border: 1px solid black;
+}
+
+/* Menus/forms section */
+
+#menus {
+  display: flex;
+  flex-direction: column;
+  padding: 50px;
+  gap: 20px;
+}
+
+#menus form {
+  display: flex;
+  flex-direction: column;
+}
+
+#menus > div {
+  border: 1px solid black;
+}
+
 
