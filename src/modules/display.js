@@ -1,12 +1,13 @@
 import { taskFactory, taskMaster } from './tasks';
 
-function generateButtons(elements) {
+const generateButtons = (elements, taskId) => {
   for (let i = 0; i < elements.length; i++) {
     if (i === 0) {
       // left
       const checkCircle = document.createElement('button');
       checkCircle.setAttribute('type', 'button');
       checkCircle.classList.add('item-check');
+      checkCircle.dataset.taskId = taskId;
       elements[i].insertBefore(checkCircle, elements[i].firstElementChild);
     } else {
       // right
@@ -16,6 +17,8 @@ function generateButtons(elements) {
       for (let j = 0; j < rightSideBtns.length; j++) {
         const button = document.createElement('button');
         button.setAttribute('type', 'button');
+        button.classList.add(rightSideBtns[j]);
+        button.dataset.taskId = taskId;
         itemButtons.appendChild(button);
       }
       elements[i].append(itemButtons);
@@ -23,12 +26,13 @@ function generateButtons(elements) {
   }
 
   return elements;
-}
+};
 
 const createListItem = (task) => {
+  const taskId = task.id;
   const taskItem = document.createElement('div');
   taskItem.classList.add('task-item');
-  taskItem.dataset.taskId = task.id;
+  taskItem.dataset.taskId = taskId;
 
   const sections = ['left', 'right'];
   let elements = [];
@@ -55,13 +59,13 @@ const createListItem = (task) => {
     elements[i].append(details);
   }
 
-  elements = generateButtons(elements);
+  elements = generateButtons(elements, taskId);
   taskItem.append(...elements);
 
   return taskItem;
 };
 
-function createTask() {
+const createTask = () => {
   const pendingTaskList = document.querySelector('#pending-task-list');
   const taskId = taskMaster.read().length;
   const taskName = document.querySelector('#task-name-add').value;
@@ -74,13 +78,32 @@ function createTask() {
   pendingTaskList.insertBefore(newItem, pendingTaskList.firstElementChild);
 };
 
-const addMenuEvents = () => {
-  const submitAddTask = document.querySelector('#submit-add');
-  submitAddTask.addEventListener('click', createTask);
+const validateNameInput = (form) => {
+  const nameField = form.querySelector('input[name="name"]');
+  const submit = form.querySelector('.submit');
+  if (nameField.validity.valid) {
+    submit.removeAttribute('disabled');
+  } else {
+    submit.setAttribute('disabled', ' ');
+  }
 };
 
-const initializeDisplay = () => {
-  addMenuEvents();
+const initializeForms = () => {
+  const addTaskForm = document.querySelector('#add-task-form');
+  addTaskForm.addEventListener('input', (() => validateNameInput(addTaskForm)));
 };
 
-export { initializeDisplay };
+const initializeButtonEvents = () => {
+  const submitAddTaskBtn = document.querySelector('#submit-add');
+  submitAddTaskBtn.addEventListener('click', createTask);
+};
+
+const initializeUI = () => {
+  initializeButtonEvents();
+  initializeForms();
+};
+// const initializeDisplay = () => {
+
+// };
+
+export { initializeUI };
