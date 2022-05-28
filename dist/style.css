@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+
+html, body, div, span, h1, h2, p, ul, li, a, button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: inherit;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  font-family: 'Roboto', Helvetica, Arial, sans-serif
+}
+
+/* High-level layout */
+nav {
+  width: 300px;
+  background-color: honeydew;
+}
+
+main {
+  flex: 1;
+  height: calc(100vh - 40px);
+  background-color: grey;
+}
+
+#menus {
+  width: 300px;
+  background-color: navajowhite;
+}
+
+footer {
+  width: 100vw;
+  height: 40px;
+  background-color: lightpink;
+}
+
