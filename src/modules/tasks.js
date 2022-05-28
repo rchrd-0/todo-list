@@ -1,9 +1,9 @@
-const taskFactory = (id, name, description) => {
+const taskFactory = (id, name, description, date) => {
   return {
     id,
     name,
     description,
-    // date,
+    date,
     // project,
     // priority,
     // completed,
@@ -17,8 +17,8 @@ const taskMaster = (() => {
 
   return {
     push,
-    read
-  }
+    read,
+  };
 })();
 
 export { taskFactory, taskMaster };

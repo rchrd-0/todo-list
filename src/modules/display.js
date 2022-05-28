@@ -1,3 +1,4 @@
+import { parseISO, format } from 'date-fns';
 import { taskFactory, taskMaster } from './tasks';
 
 const generateButtons = (elements, taskId) => {
@@ -52,7 +53,7 @@ const createListItem = (task) => {
       header.textContent = task.name;
       para.textContent = task.description;
     } else {
-      header.textContent = 'Date';
+      header.textContent = (task.date) ? format(task.date, 'd MMM yyyy') : '';
       para.textContent = 'Project';
     }
     details.append(header, para);
@@ -70,8 +71,10 @@ const createTask = () => {
   const taskId = taskMaster.read().length;
   const taskName = document.querySelector('#task-name-add').value;
   const taskDescription = document.querySelector('#task-description-add').value;
+  const taskDate = document.querySelector('#task-date-add').value;
 
-  const newTask = taskFactory(taskId, taskName, taskDescription);
+  const date = !taskDate ? null : parseISO(taskDate);
+  const newTask = taskFactory(taskId, taskName, taskDescription, date);
   taskMaster.push(newTask);
 
   const newItem = createListItem(newTask);
@@ -90,7 +93,7 @@ const validateNameInput = (form) => {
 
 const initializeForms = () => {
   const addTaskForm = document.querySelector('#add-task-form');
-  addTaskForm.addEventListener('input', (() => validateNameInput(addTaskForm)));
+  addTaskForm.addEventListener('input', () => validateNameInput(addTaskForm));
 };
 
 const initializeButtonEvents = () => {
