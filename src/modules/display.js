@@ -1,6 +1,11 @@
 import { parseISO, format } from 'date-fns';
 import { taskFactory, taskMaster } from './tasks';
-import { showAdd, showEdit, hideMenu, initializeForms } from './form-controller';
+import {
+  showAdd,
+  showEdit,
+  hideMenu,
+  initializeForms,
+} from './form-controller';
 
 const generateButtons = (elements, taskId) => {
   for (let i = 0; i < elements.length; i++) {
@@ -22,7 +27,9 @@ const generateButtons = (elements, taskId) => {
         button.classList.add(rightSideBtns[j]);
         button.dataset.taskId = taskId;
         if (j === 0) {
-          button.addEventListener('click', (() => showEdit(button.dataset.taskId)))
+          button.addEventListener('click', () =>
+            showEdit(button.dataset.taskId)
+          );
         }
         itemButtons.appendChild(button);
       }
@@ -75,16 +82,16 @@ const clearList = () => {
   while (pendingTaskList.childElementCount > 0) {
     pendingTaskList.removeChild(pendingTaskList.firstElementChild);
   }
-}
+};
 const renderList = () => {
   const pendingTaskList = document.querySelector('#pending-task-list');
   const taskList = taskMaster.read();
   clearList();
-  taskList.forEach(task => {
+  taskList.forEach((task) => {
     const listItem = createListItem(task);
     pendingTaskList.insertBefore(listItem, pendingTaskList.firstElementChild);
-  })
-}
+  });
+};
 
 const createTask = () => {
   const taskId = taskMaster.read().length;

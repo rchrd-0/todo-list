@@ -64,11 +64,18 @@ const validateNameInput = (form) => {
   }
 };
 
+const setMinDate = () => {
+  const dateInputs = document.querySelectorAll('input[type=date]');
+  const today = format(new Date(), 'yyyy-MM-dd');
+  dateInputs.forEach(input => input.setAttribute('min', today));
+}
+
 const initializeForms = () => {
   const allForms = document.querySelectorAll('form');
   allForms.forEach((form) =>
     form.addEventListener('input', () => validateNameInput(form))
   );
+  setMinDate();
 };
 
 // const showEdit = () => {
