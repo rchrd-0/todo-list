@@ -10,21 +10,24 @@
   </head>
   <body>
     <div id="main-container">
+
+      <!-- <button type="button" id="debug">Debug</button> -->
+
       <nav>
         <section id="home-nav">
-          <div class="home-item">
+          <div class="home-item" data-sort-id="0">
             <div class="nav-icon"></div>
             <span>All</span>
           </div>
-          <div class="home-item">
+          <div class="home-item" data-sort-id="3">
             <div class="nav-icon"></div>
             <span>Inbox</span>
           </div>
-          <div class="home-item">
+          <div class="home-item" data-sort-id="1">
             <div class="nav-icon"></div>
             <span>Today</span>
           </div>
-          <div class="home-item">
+          <div class="home-item" data-sort-id="2">
             <div class="nav-icon"></div>
             <span>Next 7 Days</span>
           </div>
@@ -73,10 +76,10 @@
         </section>
       </nav>
 
-      <main id="main-display">
+      <main id="main-display" data-list-id="3">
         <section id="pending-tasks">
           <header>
-            <h1>Inbox</h1>
+            <h1 id="list-title">Inbox</h1>
             <button type="button" id="show-add-task">Add task</button>
           </header>
           <div class="task-list" id="pending-task-list">

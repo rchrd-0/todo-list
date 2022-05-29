@@ -1,7 +1,7 @@
 import { parseISO } from 'date-fns';
 import { taskFactory, taskMaster } from './tasks';
 import { showAdd, hideMenu } from './form-controller';
-import { renderTaskList } from './display';
+import { reloadList } from './display';
 
 const initializeButtonEvents = () => {
   const submitAddTask = document.querySelector('#submit-add');
@@ -25,7 +25,8 @@ function createTask() {
   taskMaster.push(newTask);
 
   hideMenu('add-task');
-  renderTaskList();
+  // renderTaskList();
+  reloadList();
 }
 
 function editTask() {
@@ -44,7 +45,8 @@ function editTask() {
   thisTask.date = !taskDate ? null : parseISO(taskDate);
   thisTask.projectId = taskProject;
   hideMenu('edit-task');
-  renderTaskList();
+  // renderTaskList();
+  reloadList();
 }
 
 export { initializeButtonEvents as intializeTaskHandler, createTask, editTask }

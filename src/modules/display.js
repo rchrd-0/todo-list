@@ -1,4 +1,10 @@
-import { format } from 'date-fns';
+import {
+  format,
+  isWithinInterval,
+  isToday,
+  addDays,
+  startOfToday,
+} from 'date-fns';
 import { taskMaster } from './tasks';
 import { projectMaster } from './projects';
 import {
@@ -99,10 +105,15 @@ const clearTaskList = () => {
   }
 };
 
-const renderTaskList = () => {
+const renderTaskList = (listName, listId, taskList) => {
+  const listTitle = document.querySelector('#list-title');
+  const mainDisplay = document.querySelector('#main-display');
   const pendingTaskList = document.querySelector('#pending-task-list');
   const completedTaskList = document.querySelector('#completed-task-list');
-  const taskList = taskMaster.read();
+
+  listTitle.textContent = listName;
+  mainDisplay.dataset.listId = listId;
+
   clearTaskList();
   taskList.forEach((task) => {
     const listItem = createTaskItem(task);
@@ -115,6 +126,41 @@ const renderTaskList = () => {
       pendingTaskList.insertBefore(listItem, pendingTaskList.firstElementChild);
     }
   });
+};
+
+const openProject = (id) => projectMaster.findProject(id);
+
+const openList = (id) => {
+  const idNum = Number(id);
+  let taskList = taskMaster.read();
+  let listName;
+  if (idNum < 3) {
+    switch (idNum) {
+      case 0:
+        listName = 'All';
+        break;
+      case 1:
+        taskList = taskList.filter((task) => isToday(task.date));
+        listName = 'Today';
+        break;
+      case 2:
+        taskList = taskList.filter((task) => isWithinWeek(task));
+        listName = 'Next 7 Days';
+        break;
+      // No default
+    }
+  } else {
+    const project = openProject(id);
+    listName = project.name;
+    taskList = project.taskList();
+  }
+  renderTaskList(listName, id, taskList);
+};
+
+const reloadList = (
+  id = document.querySelector('#main-display').dataset.listId
+) => {
+  openList(id);
 };
 
 const createProjectItem = (project) => {
@@ -171,17 +217,32 @@ function removeTask(id) {
     hideMenu('edit-task');
   }
   taskMaster.remove(id);
-  renderTaskList();
+  reloadList();
 }
 
 function completeTask(id) {
   const thisTask = taskMaster.findTask(id);
   thisTask.completed = !thisTask.completed;
-  renderTaskList();
+  reloadList();
 }
+
+function isWithinWeek(task) {
+  return isWithinInterval(task.date, {
+    start: startOfToday(),
+    end: addDays(startOfToday(), 8),
+  });
+}
+
+const initializeNavHomeEvents = () => {
+  const homeLinks = document.querySelectorAll('.home-item');
+  homeLinks.forEach((link) => {
+    link.addEventListener('click', () => openList(link.dataset.sortId));
+  });
+};
 
 const initializeUI = () => {
   initializeFormController();
+  initializeNavHomeEvents();
 };
 
-export { initializeUI, renderTaskList, renderProjectList };
+export { initializeUI, reloadList, renderProjectList }

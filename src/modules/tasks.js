@@ -22,7 +22,7 @@ const taskMaster = (() => {
   }
   const findProject = (id) => {
     const idNum = Number(id);
-    return read().find(project => project.id === idNum);
+    return read().filter(task => task.projectId === idNum);
   }
   const remove = (id) => {
     const idNum = Number(id);
