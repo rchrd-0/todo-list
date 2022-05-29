@@ -5,9 +5,19 @@ const projectFactory = (id, name) => {
   const taskList = () => taskMaster.findProject(id);
   return {
     taskList,
-    id,
-    name,
-  };
+    get id() {
+      return id
+    },
+    set id(newId) {
+      id = newId;
+    },
+    get name() {
+      return name
+    },
+    set name(newName) {
+      name = newName
+    }
+  }
 };
 
 const projectMaster = (() => {
@@ -16,12 +26,12 @@ const projectMaster = (() => {
   const read = () => projectList;
   const findProject = (id) => {
     const idNum = Number(id);
-    return read().find((project) => project.id === idNum);
+    return projectList.find((project) => project.id === idNum);
   };
   const remove = (id) => {
     const idNum = Number(id);
-    _.remove(read(), findProject(id));
-    read().forEach((project) => {
+    _.remove(projectList, findProject(id));
+    projectList.forEach((project) => {
       if (project.id > idNum) {
         project.taskList().forEach((task) => {
           task.projectId -= 1;

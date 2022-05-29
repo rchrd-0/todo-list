@@ -1,14 +1,50 @@
 import _ from 'lodash';
 
-const taskFactory = (id, name, description, date, projectId, completed = false) => {
+const taskFactory = (
+  id,
+  name,
+  description,
+  date,
+  projectId,
+  completed = false
+) => {
   return {
-    id,
-    name,
-    description,
-    date,
-    projectId,
-    completed,
-    // priority,
+    get id() {
+      return id;
+    },
+    set id(newId) {
+      id = newId;
+    },
+    get name() {
+      return name;
+    },
+    set name(newName) {
+      name = newName;
+    },
+    get description() {
+      return description;
+    },
+    set description(newDescription) {
+      description = newDescription;
+    },
+    get date() {
+      return date;
+    },
+    set date(newDate) {
+      date = newDate;
+    },
+    get projectId() {
+      return projectId;
+    },
+    set projectId(newProjectId) {
+      projectId = newProjectId;
+    },
+    get completed() {
+      return completed;
+    },
+    set completed(newCompleted) {
+      completed = newCompleted;
+    },
   };
 };
 
@@ -18,21 +54,23 @@ const taskMaster = (() => {
   const read = () => taskList;
   const findTask = (id) => {
     const idNum = Number(id);
-    return read().find(item => item.id === idNum);
-  }
+    const thisTask = taskList.find((task) => task.id === idNum);
+    return thisTask;
+  };
   const findProject = (id) => {
-    const idNum = Number(id);
-    return read().filter(task => task.projectId === idNum);
-  }
+    const projectIdNum = Number(id);
+    const tasks = taskList.filter((task) => task.projectId === projectIdNum);
+    return tasks;
+  };
   const remove = (id) => {
     const idNum = Number(id);
-    _.remove(read(), findTask(idNum));
-    read().forEach(task => {
+    _.remove(taskList, findTask(idNum));
+    taskList.forEach((task) => {
       if (task.id > idNum) {
         task.id -= 1;
       }
-    })
-  }
+    });
+  };
 
   return {
     push,

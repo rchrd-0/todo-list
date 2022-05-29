@@ -30,8 +30,8 @@ const updateSelectValues = () => {
   const listId = Number(document.querySelector('#main-display').dataset.listId);
   const addTaskForm = document.querySelector('#add-task-form');
   const projectSelect = addTaskForm.querySelector('select');
-  projectSelect.value = (listId > 3) ? listId : 3;
-}
+  projectSelect.value = listId > 3 ? listId : 3;
+};
 
 const validateNameInput = (form) => {
   const nameField = form.querySelector('input[name="name"]');
@@ -86,8 +86,6 @@ const showAddProject = () => {
   validateNameInput(addProjectForm);
 };
 
-
-
 const hideMenu = (btn) => {
   let menu;
   switch (btn) {
@@ -125,9 +123,10 @@ const initializeButtonEvents = () => {
 
 const initializeForms = () => {
   const allForms = document.querySelectorAll('form');
-  allForms.forEach((form) =>
-    form.addEventListener('input', () => validateNameInput(form))
-  );
+  allForms.forEach((form) => {
+    form.addEventListener('input', () => validateNameInput(form));
+    form.addEventListener('submit', (e) => e.preventDefault());
+  });
   setMinDate();
   updateSelectOptions();
 };
@@ -144,5 +143,5 @@ export {
   showEdit,
   hideMenu,
   updateSelectOptions,
-  updateSelectValues
+  updateSelectValues,
 };

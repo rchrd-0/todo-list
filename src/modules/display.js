@@ -15,7 +15,7 @@ import {
   updateSelectValues,
 } from './form-controller';
 
-const generateTaskButtons = (elements, taskId) => {
+const generateTaskEvents = (elements, taskId) => {
   for (let i = 0; i < elements.length; i++) {
     if (i === 0) {
       // left
@@ -89,7 +89,7 @@ const createTaskItem = (task) => {
     elements[i].append(details);
   }
 
-  elements = generateTaskButtons(elements, taskId);
+  elements = generateTaskEvents(elements, taskId);
   taskItem.append(...elements);
 
   return taskItem;
@@ -130,8 +130,6 @@ const renderTaskList = (listName, listId, taskList) => {
   updateSelectValues();
 };
 
-const openProject = (id) => projectMaster.findProject(id);
-
 const openList = (id) => {
   const idNum = Number(id);
   let taskList = taskMaster.read();
@@ -152,7 +150,7 @@ const openList = (id) => {
       // No default
     }
   } else {
-    const project = openProject(id);
+    const project = projectMaster.findProject(id);
     listName = project.name;
     taskList = project.taskList();
   }
@@ -166,10 +164,12 @@ const reloadList = (
 };
 
 const generateProjectEvents = (projectItem) => {
+  const { projectId } = projectItem.dataset;
   const projectLeft = projectItem.querySelector('.project-left');
-  projectLeft.addEventListener('click', () =>
-    openList(projectItem.dataset.projectId)
-  );
+  projectLeft.addEventListener('click', () => openList(projectId));
+
+  const projectRemove = projectItem.querySelector('.project-remove');
+  projectRemove.addEventListener('click', () => removeProject(projectItem));
 
   return projectItem;
 };
@@ -240,6 +240,33 @@ function completeTask(id) {
   const thisTask = taskMaster.findTask(id);
   thisTask.completed = !thisTask.completed;
   reloadList();
+}
+
+function removeProject(projectItem) {
+  const projectId = Number(projectItem.dataset.projectId);
+  let listId = Number(document.querySelector('#main-display').dataset.listId);
+  // Also removes tasks that belong to project to be removed
+  const existingTasks = projectMaster.findProject(projectId).taskList();
+  existingTasks.forEach(task => {
+    const editTaskForm = document.querySelector('#edit-task-form');
+    if (editTaskForm.dataset.taskId === task.id) {
+      hideMenu('edit-task');
+    }
+    taskMaster.remove(task.id);
+  })
+  projectMaster.remove(projectId);
+  projectItem.parentElement.remove();
+
+  if (listId > projectId) {
+    listId -= 1;
+    openList(listId);
+  } else if (listId === projectId) {
+    openList(3);
+  } else {
+    reloadList();
+  }
+
+  renderProjectList();
 }
 
 function isWithinWeek(task) {
