@@ -7,12 +7,23 @@ const insertTop = (menu) => {
   menusSection.insertBefore(menu, menusSection.firstElementChild);
 };
 
+const validateNameInput = (form) => {
+  const nameField = form.querySelector('input[name="name"]');
+  const submit = form.querySelector('.submit');
+  if (nameField.validity.valid) {
+    submit.removeAttribute('disabled');
+  } else {
+    submit.setAttribute('disabled', ' ');
+  }
+};
+
 const showAdd = () => {
   const addTaskMenu = document.querySelector('#add-task-menu');
   const addTaskForm = addTaskMenu.querySelector('form');
   addTaskForm.reset();
   addTaskMenu.classList.remove('display-none');
   insertTop(addTaskMenu);
+  validateNameInput(addTaskForm);
 };
 
 const getTaskInfo = (id) => {
@@ -35,6 +46,7 @@ const showEdit = (id) => {
     showEditMenu.classList.remove('display-none');
   }
   getTaskInfo(id);
+  validateNameInput(editTaskForm);
 };
 
 const showAddProject = () => {
@@ -42,9 +54,27 @@ const showAddProject = () => {
   const addProjectForm = showAddProjectMenu.querySelector('form');
   addProjectForm.reset();
   showAddProjectMenu.classList.remove('display-none');
+  validateNameInput(addProjectForm);
 };
 
+const updateSelectOptions = () => {
+  const menus = document.querySelector('#menus');
+  const forms = menus.querySelectorAll('form');
+  forms.forEach((form) => {
+    const projectSelect = form.querySelector('select');
+    while (projectSelect.childElementCount > 0) {
+      projectSelect.removeChild(projectSelect.firstElementChild);
+    }
 
+    const projectList = projectMaster.read();
+    projectList.forEach((project) => {
+      const option = document.createElement('option');
+      option.textContent = project.name;
+      option.value = project.id;
+      projectSelect.appendChild(option);
+    });
+  });
+};
 
 const hideMenu = (btn) => {
   let menu;
@@ -66,15 +96,7 @@ const hideMenu = (btn) => {
   menu.classList.add('display-none');
 };
 
-const validateNameInput = (form) => {
-  const nameField = form.querySelector('input[name="name"]');
-  const submit = form.querySelector('.submit');
-  if (nameField.validity.valid) {
-    submit.removeAttribute('disabled');
-  } else {
-    submit.setAttribute('disabled', ' ');
-  }
-};
+
 
 const setMinDate = () => {
   const dateInputs = document.querySelectorAll('input[type=date]');
@@ -97,6 +119,7 @@ const initializeForms = () => {
     form.addEventListener('input', () => validateNameInput(form))
   );
   setMinDate();
+  updateSelectOptions();
 };
 
 const initializeFormController = () => {
@@ -110,4 +133,5 @@ export {
   showAddProject,
   showEdit,
   hideMenu,
+  updateSelectOptions,
 };

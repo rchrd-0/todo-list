@@ -5,6 +5,7 @@ import {
   initializeFormController,
   hideMenu,
   showEdit,
+  updateSelectOptions,
 } from './form-controller';
 
 const generateTaskButtons = (elements, taskId) => {
@@ -72,7 +73,10 @@ const createTaskItem = (task) => {
       para.textContent = task.description;
     } else {
       header.textContent = task.date ? format(task.date, 'd MMM yyyy') : '';
-      para.textContent = 'Project';
+      para.textContent =
+        task.projectId === 3
+          ? ''
+          : projectMaster.findProject(task.projectId).name;
     }
     details.append(header, para);
     elements[i].append(details);
@@ -158,6 +162,7 @@ const renderProjectList = () => {
     const projectItem = createProjectItem(project);
     listDiv.appendChild(projectItem);
   });
+  updateSelectOptions();
 };
 
 function removeTask(id) {

@@ -18,9 +18,10 @@ function createTask() {
   const taskName = document.querySelector('#task-name-add').value;
   const taskDescription = document.querySelector('#task-description-add').value;
   const taskDate = document.querySelector('#task-date-add').value;
+  const taskProject = Number(document.querySelector('#project-add').value)
 
   const date = !taskDate ? null : parseISO(taskDate);
-  const newTask = taskFactory(taskId, taskName, taskDescription, date);
+  const newTask = taskFactory(taskId, taskName, taskDescription, date, taskProject);
   taskMaster.push(newTask);
 
   hideMenu('add-task');
