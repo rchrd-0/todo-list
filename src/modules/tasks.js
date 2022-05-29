@@ -1,13 +1,13 @@
 import _ from 'lodash';
 
-const taskFactory = (id, name, description, date, completed = false) => {
+const taskFactory = (id, name, description, date, projectId, completed = false) => {
   return {
     id,
     name,
     description,
     date,
-    completed
-    // project,
+    projectId,
+    completed,
     // priority,
   };
 };
@@ -18,8 +18,11 @@ const taskMaster = (() => {
   const read = () => taskList;
   const findTask = (id) => {
     const idNum = Number(id);
-    const thisTask = read().find(item => item.id === idNum);
-    return thisTask;
+    return read().find(item => item.id === idNum);
+  }
+  const findProject = (id) => {
+    const idNum = Number(id);
+    return read().find(project => project.id === idNum);
   }
   const remove = (id) => {
     const idNum = Number(id);
@@ -35,6 +38,7 @@ const taskMaster = (() => {
     push,
     read,
     findTask,
+    findProject,
     remove,
   };
 })();

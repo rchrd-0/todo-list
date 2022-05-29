@@ -1,5 +1,6 @@
 import { format } from 'date-fns';
 import { taskMaster } from './tasks';
+import { projectMaster } from './projects';
 
 const insertTop = (menu) => {
   const menusSection = document.querySelector('#menus');
@@ -23,8 +24,8 @@ const getTaskInfo = (id) => {
   const thisTask = taskMaster.findTask(id);
   editName.value = thisTask.name;
   editDescription.value = thisTask.description;
-  editDate.value = (!thisTask.date) ? '' : format(thisTask.date, 'yyyy-MM-dd');
-}
+  editDate.value = !thisTask.date ? '' : format(thisTask.date, 'yyyy-MM-dd');
+};
 
 const showEdit = (id) => {
   const showEditMenu = document.querySelector('#edit-task-menu');
@@ -34,7 +35,16 @@ const showEdit = (id) => {
     showEditMenu.classList.remove('display-none');
   }
   getTaskInfo(id);
-}
+};
+
+const showAddProject = () => {
+  const showAddProjectMenu = document.querySelector('#add-project-menu');
+  const addProjectForm = showAddProjectMenu.querySelector('form');
+  addProjectForm.reset();
+  showAddProjectMenu.classList.remove('display-none');
+};
+
+
 
 const hideMenu = (btn) => {
   let menu;
@@ -46,6 +56,8 @@ const hideMenu = (btn) => {
       menu = document.querySelector('#edit-task-menu');
       menu.dataset.taskId = null;
       break;
+    case 'add-project':
+      menu = document.querySelector('#add-project-menu');
     // No default
   }
 
@@ -67,8 +79,17 @@ const validateNameInput = (form) => {
 const setMinDate = () => {
   const dateInputs = document.querySelectorAll('input[type=date]');
   const today = format(new Date(), 'yyyy-MM-dd');
-  dateInputs.forEach(input => input.setAttribute('min', today));
-}
+  dateInputs.forEach((input) => input.setAttribute('min', today));
+};
+
+const initializeButtonEvents = () => {
+  const cancelBtns = document.querySelectorAll('.cancel');
+  cancelBtns.forEach((button) =>
+    button.addEventListener('click', (e) => {
+      hideMenu(e.target.dataset.menu);
+    })
+  );
+};
 
 const initializeForms = () => {
   const allForms = document.querySelectorAll('form');
@@ -78,4 +99,15 @@ const initializeForms = () => {
   setMinDate();
 };
 
-export { showAdd, hideMenu, initializeForms, showEdit };
+const initializeFormController = () => {
+  initializeButtonEvents();
+  initializeForms();
+};
+
+export {
+  initializeFormController,
+  showAdd,
+  showAddProject,
+  showEdit,
+  hideMenu,
+};

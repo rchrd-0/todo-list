@@ -1,13 +1,13 @@
-import { parseISO, format } from 'date-fns';
-import { taskFactory, taskMaster } from './tasks';
+import { format } from 'date-fns';
+import { taskMaster } from './tasks';
+import { projectMaster } from './projects';
 import {
-  showAdd,
-  showEdit,
+  initializeFormController,
   hideMenu,
-  initializeForms,
+  showEdit,
 } from './form-controller';
 
-const generateButtons = (elements, taskId) => {
+const generateTaskButtons = (elements, taskId) => {
   for (let i = 0; i < elements.length; i++) {
     if (i === 0) {
       // left
@@ -47,7 +47,7 @@ const generateButtons = (elements, taskId) => {
   return elements;
 };
 
-const createListItem = (task) => {
+const createTaskItem = (task) => {
   const taskId = task.id;
   const taskItem = document.createElement('div');
   taskItem.classList.add('task-item');
@@ -78,13 +78,13 @@ const createListItem = (task) => {
     elements[i].append(details);
   }
 
-  elements = generateButtons(elements, taskId);
+  elements = generateTaskButtons(elements, taskId);
   taskItem.append(...elements);
 
   return taskItem;
 };
 
-const clearList = () => {
+const clearTaskList = () => {
   const pendingTaskList = document.querySelector('#pending-task-list');
   const completedTaskList = document.querySelector('#completed-task-list');
   while (pendingTaskList.childElementCount > 0) {
@@ -94,51 +94,71 @@ const clearList = () => {
     completedTaskList.removeChild(completedTaskList.firstElementChild);
   }
 };
-function renderList() {
+
+const renderTaskList = () => {
   const pendingTaskList = document.querySelector('#pending-task-list');
   const completedTaskList = document.querySelector('#completed-task-list');
   const taskList = taskMaster.read();
-  clearList();
+  clearTaskList();
   taskList.forEach((task) => {
-    const listItem = createListItem(task);
+    const listItem = createTaskItem(task);
     if (task.completed) {
-      completedTaskList.insertBefore(listItem, completedTaskList.firstElementChild);
+      completedTaskList.insertBefore(
+        listItem,
+        completedTaskList.firstElementChild
+      );
     } else {
       pendingTaskList.insertBefore(listItem, pendingTaskList.firstElementChild);
     }
   });
-}
+};
 
-function createTask() {
-  const taskId = taskMaster.read().length;
-  const taskName = document.querySelector('#task-name-add').value;
-  const taskDescription = document.querySelector('#task-description-add').value;
-  const taskDate = document.querySelector('#task-date-add').value;
+const createProjectItem = (project) => {
+  const projectId = project.id;
+  const projectItem = document.createElement('div');
+  projectItem.classList.add('project-item');
+  projectItem.dataset.projectId = projectId;
 
-  const date = !taskDate ? null : parseISO(taskDate);
-  const newTask = taskFactory(taskId, taskName, taskDescription, date);
-  taskMaster.push(newTask);
+  const projectLeft = document.createElement('div');
+  projectLeft.classList.add('project-left');
+  const navIcon = document.createElement('div');
+  navIcon.classList.add('nav-icon');
+  const projectName = document.createElement('span');
+  projectName.textContent = project.name;
+  projectLeft.append(navIcon, projectName);
 
-  hideMenu('add-task');
-  renderList();
-}
+  const projectButtons = document.createElement('div');
+  projectButtons.classList.add('project-buttons');
+  const buttons = ['project-edit', 'project-remove'];
+  for (let i = 0; i < buttons.length; i++) {
+    const button = document.createElement('button');
+    button.classList.add(buttons[i]);
+    button.dataset.projectId = projectId;
+    projectButtons.appendChild(button);
+  }
 
-function editTask() {
-  const editTaskForm = document.querySelector('#edit-task-form');
-  const { taskId } = editTaskForm.dataset;
-  const thisTask = taskMaster.findTask(taskId);
-  const taskName = document.querySelector('#task-name-edit').value;
-  const taskDescription = document.querySelector(
-    '#task-description-edit'
-  ).value;
-  const taskDate = document.querySelector('#task-date-edit').value;
+  projectItem.append(projectLeft, projectButtons);
 
-  thisTask.name = taskName;
-  thisTask.description = taskDescription;
-  thisTask.date = !taskDate ? null : parseISO(taskDate);
-  hideMenu('edit-task');
-  renderList();
-}
+  return projectItem;
+};
+
+const clearProjectList = () => {
+  const projectList = document.querySelector('#project-list');
+  while (projectList.childElementCount > 0) {
+    projectList.removeChild(projectList.lastElementChild);
+  }
+};
+
+const renderProjectList = () => {
+  const listDiv = document.querySelector('#project-list');
+  // Filters out inbox project (id=3), projects start at id=4
+  const projectList = projectMaster.read().filter((project) => project.id > 3);
+  clearProjectList();
+  projectList.forEach((project) => {
+    const projectItem = createProjectItem(project);
+    listDiv.appendChild(projectItem);
+  });
+};
 
 function removeTask(id) {
   const editTaskForm = document.querySelector('#edit-task-form');
@@ -146,34 +166,17 @@ function removeTask(id) {
     hideMenu('edit-task');
   }
   taskMaster.remove(id);
-  renderList();
+  renderTaskList();
 }
 
 function completeTask(id) {
   const thisTask = taskMaster.findTask(id);
   thisTask.completed = !thisTask.completed;
-  renderList();
+  renderTaskList();
 }
 
-const initializeButtonEvents = () => {
-  const submitAddTask = document.querySelector('#submit-add');
-  const showAddTask = document.querySelector('#show-add-task');
-  const submitEditTask = document.querySelector('#submit-edit');
-  const cancelBtns = document.querySelectorAll('.cancel');
-
-  showAddTask.addEventListener('click', showAdd);
-  submitAddTask.addEventListener('click', createTask);
-  submitEditTask.addEventListener('click', editTask);
-  cancelBtns.forEach((button) =>
-    button.addEventListener('click', (e) => {
-      hideMenu(e.target.dataset.menu);
-    })
-  );
-};
-
 const initializeUI = () => {
-  initializeButtonEvents();
-  initializeForms();
+  initializeFormController();
 };
 
-export { initializeUI };
+export { initializeUI, renderTaskList, renderProjectList };
