@@ -13,6 +13,8 @@
     "quotes": ["error", "single"],
     "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
     "arrow-body-style": "off",
-    "default-case": ["error", { "commentPattern": "^No\\sdefault" }]
+    "default-case": ["error", { "commentPattern": "^No\\sdefault" }],
+    "no-use-before-define": ["error", { "functions": false }],
+    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["task", "project"] }]
   }
 }

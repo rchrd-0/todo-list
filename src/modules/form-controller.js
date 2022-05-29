@@ -31,11 +31,13 @@ const getTaskInfo = (id) => {
   const editName = editTaskForm.querySelector('#task-name-edit');
   const editDescription = editTaskForm.querySelector('#task-description-edit');
   const editDate = editTaskForm.querySelector('#task-date-edit');
+  const editProject = editTaskForm.querySelector('#project-edit');
 
   const thisTask = taskMaster.findTask(id);
   editName.value = thisTask.name;
   editDescription.value = thisTask.description;
   editDate.value = !thisTask.date ? '' : format(thisTask.date, 'yyyy-MM-dd');
+  editProject.value = thisTask.projectId;
 };
 
 const showEdit = (id) => {

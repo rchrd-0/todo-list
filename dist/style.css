@@ -67,6 +67,38 @@ footer {
   background-color: lightpink;
 }
 
+/* Nav bar */
+
+.home-item,
+.project-item {
+  display: flex;
+  align-items: center;
+}
+
+.nav-icon {
+  width: 30px;
+  height: 30px;
+  border: 1px solid black;
+}
+
+.project-left {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.project-buttons {
+  display: flex;
+  gap: 8px;
+  width: fit-content;
+}
+
+.project-item button {
+  width: 25px;
+  height: 25px;
+  border: 1px solid black;
+}
+
 /* Task list display */
 
 .task-list {
@@ -77,6 +109,7 @@ footer {
 /* Task items */
 
 .task-item {
+  height: 65px;
   padding: 10px;
   border: 1px solid black;
   display: flex;
@@ -132,5 +165,3 @@ footer {
 #menus > div {
   border: 1px solid black;
 }
-
-

@@ -10,16 +10,21 @@
   </head>
   <body>
     <div id="main-container">
-
       <nav>
         <section id="home-nav">
-          <div>
+          <div class="home-item">
             <div class="nav-icon"></div>
             <span>All</span>
+          </div>
+          <div class="home-item">
             <div class="nav-icon"></div>
             <span>Inbox</span>
+          </div>
+          <div class="home-item">
             <div class="nav-icon"></div>
             <span>Today</span>
+          </div>
+          <div class="home-item">
             <div class="nav-icon"></div>
             <span>Next 7 Days</span>
           </div>
@@ -27,12 +32,48 @@
         <section id="project-nav">
           <div id="project-header">
             <h2>Projects</h2>
+            <button type="button" id="show-add-project">Add project</button>
+          </div>
+          <div id="add-project-menu" class="display-none">
+            <form id="add-project-form">
+              <input
+                type="text"
+                name="name"
+                id="project-name-add"
+                placeholder="Project name"
+                required
+              />
+              <div class="menu-buttons">
+                <button
+                  type="button"
+                  id="submit-add-project"
+                  class="submit"
+                  disabled
+                >
+                  Add
+                </button>
+                <button type="button" class="cancel" data-menu="add-project">
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+          <div id="project-list">
+            <!-- <div class="project-item" data-project-id="null">
+              <div class="project-left">
+                <div class="nav-icon"></div>
+                <span>Name</span>
+              </div>
+              <div class="project-buttons">
+                <button type="button" class="project-edit" data-project-id="null"></button>
+                <button type="button" class="project-remove" data-project-id="null"></button>
+              </div>
+            </div> -->
           </div>
         </section>
       </nav>
 
       <main id="main-display">
-
         <section id="pending-tasks">
           <header>
             <h1>Inbox</h1>
@@ -58,18 +99,17 @@
                   </div>
                 </div>
               </div> -->
-            </div>
+          </div>
         </section>
 
         <section id="completed-tasks">
           <header>Completed</header>
           <div class="task-list" id="completed-task-list"></div>
         </section>
-
       </main>
 
       <section id="menus">
-        <div id="add-task-menu">
+        <div id="add-task-menu" class="display-none">
           <form id="add-task-form">
             <input
               type="text"
@@ -85,14 +125,19 @@
               rows="4"
               placeholder="Description"
             ></textarea>
-            <input type="date" name="date" id="task-date-add">
+            <input type="date" name="date" id="task-date-add" />
+            <select name="project" id="project-add"></select>
             <div class="menu-buttons">
-              <button type="button" id="submit-add" class="submit" disabled>Add</button>
-              <button type="button" class="cancel" data-menu="add-task">Cancel</button>
+              <button type="button" id="submit-add" class="submit" disabled>
+                Add
+              </button>
+              <button type="button" class="cancel" data-menu="add-task">
+                Cancel
+              </button>
             </div>
           </form>
         </div>
-        <div id="edit-task-menu">
+        <div id="edit-task-menu" class="display-none">
           <form id="edit-task-form" data-task-id="null">
             <input
               type="text"
@@ -108,15 +153,19 @@
               rows="4"
               placeholder="Description"
             ></textarea>
-            <input type="date" name="date" id="task-date-edit">
+            <input type="date" name="date" id="task-date-edit" />
+            <select name="project" id="project-edit"></select>
             <div class="menu-buttons">
-              <button type="button" id="submit-edit" class="submit" disabled>Edit</button>
-              <button type="button" class="cancel" data-menu="edit-task">Cancel</button>
+              <button type="button" id="submit-edit" class="submit" disabled>
+                Edit
+              </button>
+              <button type="button" class="cancel" data-menu="edit-task">
+                Cancel
+              </button>
             </div>
           </form>
         </div>
       </section>
-
     </div>
     <footer></footer>
   </body>

@@ -37,10 +37,12 @@ function editTask() {
     '#task-description-edit'
   ).value;
   const taskDate = document.querySelector('#task-date-edit').value;
+  const taskProject = Number(document.querySelector('#project-edit').value)
 
   thisTask.name = taskName;
   thisTask.description = taskDescription;
   thisTask.date = !taskDate ? null : parseISO(taskDate);
+  thisTask.projectId = taskProject;
   hideMenu('edit-task');
   renderTaskList();
 }
