@@ -163,9 +163,20 @@ const reloadList = (
   openList(id);
 };
 
+const generateProjectEvents = (projectItem) => {
+  const projectLeft = projectItem.querySelector('.project-left');
+  projectLeft.addEventListener('click', () =>
+    openList(projectItem.dataset.projectId)
+  );
+
+  return projectItem;
+};
+
 const createProjectItem = (project) => {
   const projectId = project.id;
-  const projectItem = document.createElement('div');
+  const displayWrapper = document.createElement('div');
+  displayWrapper.classList.add('display-wrapper');
+  let projectItem = document.createElement('div');
   projectItem.classList.add('project-item');
   projectItem.dataset.projectId = projectId;
 
@@ -188,9 +199,13 @@ const createProjectItem = (project) => {
   }
 
   projectItem.append(projectLeft, projectButtons);
+  projectItem = generateProjectEvents(projectItem);
+  displayWrapper.appendChild(projectItem);
 
-  return projectItem;
+  return displayWrapper;
 };
+
+
 
 const clearProjectList = () => {
   const projectList = document.querySelector('#project-list');
@@ -245,4 +260,4 @@ const initializeUI = () => {
   initializeNavHomeEvents();
 };
 
-export { initializeUI, reloadList, renderProjectList }
+export { initializeUI, reloadList, renderProjectList };
