@@ -247,13 +247,15 @@ function removeProject(projectItem) {
   let listId = Number(document.querySelector('#main-display').dataset.listId);
   // Also removes tasks that belong to project to be removed
   const existingTasks = projectMaster.findProject(projectId).taskList();
-  existingTasks.forEach(task => {
-    const editTaskForm = document.querySelector('#edit-task-form');
-    if (editTaskForm.dataset.taskId === task.id) {
+  existingTasks.forEach((task) => {
+    const editTaskId = Number(
+      document.querySelector('#edit-task-form').dataset.taskId
+    );
+    if (editTaskId === task.id) {
       hideMenu('edit-task');
     }
     taskMaster.remove(task.id);
-  })
+  });
   projectMaster.remove(projectId);
   projectItem.parentElement.remove();
 
@@ -261,6 +263,7 @@ function removeProject(projectItem) {
     listId -= 1;
     openList(listId);
   } else if (listId === projectId) {
+    // Opens inbox
     openList(3);
   } else {
     reloadList();
