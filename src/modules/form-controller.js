@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { format, startOfToday } from 'date-fns';
 import { taskMaster } from './tasks';
 import { projectMaster } from './projects';
 
@@ -44,10 +44,17 @@ const validateNameInput = (form) => {
 };
 
 const showAdd = () => {
+  const currentList = document.querySelector('#main-display').dataset.listId;
   const addTaskMenu = document.querySelector('#add-task-menu');
   const addTaskForm = addTaskMenu.querySelector('form');
+  const dateInput = addTaskForm.querySelector('input[type="date"]');
   addTaskForm.reset();
   addTaskMenu.classList.remove('display-none');
+
+  if (Number(currentList) === 1) {
+    dateInput.value = format(startOfToday(), 'yyyy-MM-dd');
+  }
+
   updateSelectValues();
   insertTop(addTaskMenu);
   validateNameInput(addTaskForm);
