@@ -12,6 +12,7 @@ import {
   hideMenu,
   showEdit,
   updateSelectOptions,
+  updateSelectValues,
 } from './form-controller';
 
 const generateTaskButtons = (elements, taskId) => {
@@ -126,6 +127,7 @@ const renderTaskList = (listName, listId, taskList) => {
       pendingTaskList.insertBefore(listItem, pendingTaskList.firstElementChild);
     }
   });
+  updateSelectValues();
 };
 
 const openProject = (id) => projectMaster.findProject(id);
@@ -205,8 +207,6 @@ const createProjectItem = (project) => {
   return displayWrapper;
 };
 
-
-
 const clearProjectList = () => {
   const projectList = document.querySelector('#project-list');
   while (projectList.childElementCount > 0) {
@@ -224,6 +224,7 @@ const renderProjectList = () => {
     listDiv.appendChild(projectItem);
   });
   updateSelectOptions();
+  updateSelectValues();
 };
 
 function removeTask(id) {

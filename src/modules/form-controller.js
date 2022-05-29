@@ -7,6 +7,32 @@ const insertTop = (menu) => {
   menusSection.insertBefore(menu, menusSection.firstElementChild);
 };
 
+const updateSelectOptions = () => {
+  const menus = document.querySelector('#menus');
+  const forms = menus.querySelectorAll('form');
+  forms.forEach((form) => {
+    const projectSelect = form.querySelector('select');
+    while (projectSelect.childElementCount > 0) {
+      projectSelect.removeChild(projectSelect.firstElementChild);
+    }
+
+    const projectList = projectMaster.read();
+    projectList.forEach((project) => {
+      const option = document.createElement('option');
+      option.textContent = project.name;
+      option.value = project.id;
+      projectSelect.appendChild(option);
+    });
+  });
+};
+
+const updateSelectValues = () => {
+  const listId = Number(document.querySelector('#main-display').dataset.listId);
+  const addTaskForm = document.querySelector('#add-task-form');
+  const projectSelect = addTaskForm.querySelector('select');
+  projectSelect.value = (listId > 3) ? listId : 3;
+}
+
 const validateNameInput = (form) => {
   const nameField = form.querySelector('input[name="name"]');
   const submit = form.querySelector('.submit');
@@ -22,6 +48,7 @@ const showAdd = () => {
   const addTaskForm = addTaskMenu.querySelector('form');
   addTaskForm.reset();
   addTaskMenu.classList.remove('display-none');
+  updateSelectValues();
   insertTop(addTaskMenu);
   validateNameInput(addTaskForm);
 };
@@ -59,24 +86,7 @@ const showAddProject = () => {
   validateNameInput(addProjectForm);
 };
 
-const updateSelectOptions = () => {
-  const menus = document.querySelector('#menus');
-  const forms = menus.querySelectorAll('form');
-  forms.forEach((form) => {
-    const projectSelect = form.querySelector('select');
-    while (projectSelect.childElementCount > 0) {
-      projectSelect.removeChild(projectSelect.firstElementChild);
-    }
 
-    const projectList = projectMaster.read();
-    projectList.forEach((project) => {
-      const option = document.createElement('option');
-      option.textContent = project.name;
-      option.value = project.id;
-      projectSelect.appendChild(option);
-    });
-  });
-};
 
 const hideMenu = (btn) => {
   let menu;
@@ -97,8 +107,6 @@ const hideMenu = (btn) => {
   form.reset();
   menu.classList.add('display-none');
 };
-
-
 
 const setMinDate = () => {
   const dateInputs = document.querySelectorAll('input[type=date]');
@@ -136,4 +144,5 @@ export {
   showEdit,
   hideMenu,
   updateSelectOptions,
+  updateSelectValues
 };
