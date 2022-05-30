@@ -9,10 +9,11 @@ import { taskMaster } from './tasks';
 import { projectMaster } from './projects';
 import {
   initializeFormController,
-  hideMenu,
   showEdit,
+  showRename,
   updateSelectOptions,
   updateSelectValues,
+  squashEdit
 } from './form-controller';
 
 const generateTaskEvents = (elements, taskId) => {
@@ -171,6 +172,9 @@ const generateProjectEvents = (projectItem) => {
   const projectRemove = projectItem.querySelector('.project-remove');
   projectRemove.addEventListener('click', () => removeProject(projectItem));
 
+  const projectEdit = projectItem.querySelector('.project-edit');
+  projectEdit.addEventListener('click', () => showRename(projectId, projectItem))
+
   return projectItem;
 };
 
@@ -209,7 +213,7 @@ const createProjectItem = (project) => {
 
 const clearProjectList = () => {
   const projectList = document.querySelector('#project-list');
-  while (projectList.childElementCount > 0) {
+  while (projectList.childElementCount > 1) {
     projectList.removeChild(projectList.lastElementChild);
   }
 };
@@ -228,10 +232,7 @@ const renderProjectList = () => {
 };
 
 function removeTask(id) {
-  const editTaskForm = document.querySelector('#edit-task-form');
-  if (editTaskForm.dataset.taskId === id) {
-    hideMenu('edit-task');
-  }
+  squashEdit(id)
   taskMaster.remove(id);
   reloadList();
 }
@@ -248,12 +249,7 @@ function removeProject(projectItem) {
   // Also removes tasks that belong to project to be removed
   const existingTasks = projectMaster.findProject(projectId).taskList();
   existingTasks.forEach((task) => {
-    const editTaskId = Number(
-      document.querySelector('#edit-task-form').dataset.taskId
-    );
-    if (editTaskId === task.id) {
-      hideMenu('edit-task');
-    }
+    squashEdit(task.id)
     taskMaster.remove(task.id);
   });
   projectMaster.remove(projectId);

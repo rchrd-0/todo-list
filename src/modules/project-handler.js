@@ -8,7 +8,7 @@ function createProject() {
 
   const newProject = projectFactory(projectId, projectName);
   projectMaster.push(newProject);
-  hideMenu('add-project');
+  hideMenu('add-project-menu');
   renderProjectList();
 }
 

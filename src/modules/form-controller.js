@@ -93,18 +93,48 @@ const showAddProject = () => {
   validateNameInput(addProjectForm);
 };
 
+
+
+
+const showRename = (id, projectItem) => {
+  const renameProjectMenu = document.querySelector('#rename-project-menu');
+  const renameProjectForm = document.querySelector('#rename-project-form');
+  const nameInput = renameProjectForm.querySelector('input[name="name"]');
+  const projectList = document.querySelector('#project-list');
+  const thisItem = projectItem.parentElement;
+  
+  renameProjectForm.dataset.projectId = id;
+  nameInput.value = projectMaster.findProject(id).name;
+  projectList.insertBefore(renameProjectMenu, thisItem);
+  thisItem.classList.add('display-none');
+  renameProjectMenu.classList.remove('display-none');
+};
+
+const hideRename = (menu) => {
+  const projectList = document.querySelector('#project-list');
+  const renameMenu = menu;
+  renameMenu.dataset.projectId = null;
+  renameMenu.nextElementSibling.classList.remove('display-none');
+  projectList.insertBefore(renameMenu, projectList.firstElementChild);
+}
+
 const hideMenu = (btn) => {
   let menu;
   switch (btn) {
-    case 'add-task':
+    case 'add-task-menu':
       menu = document.querySelector('#add-task-menu');
       break;
-    case 'edit-task':
+    case 'edit-task-menu':
       menu = document.querySelector('#edit-task-menu');
       menu.dataset.taskId = null;
       break;
-    case 'add-project':
+    case 'add-project-menu':
       menu = document.querySelector('#add-project-menu');
+      break;
+    case 'rename-project-menu':
+      menu = document.querySelector('#rename-project-menu');
+      hideRename(menu);
+      break;
     // No default
   }
 
@@ -113,6 +143,18 @@ const hideMenu = (btn) => {
   menu.classList.add('display-none');
 };
 
+const squashEdit = (id) => {
+  const editTaskForm = document.querySelector('#edit-task-form');
+  
+  if (![id, editTaskForm.dataset.taskId].includes('null')) {
+    const idNum = Number(id);
+    const elementId = Number(editTaskForm.dataset.taskId);
+    
+    if (idNum === elementId) {
+      hideMenu(editTaskForm.parentElement.getAttribute('id'));
+    }
+  }
+};
 const setMinDate = () => {
   const dateInputs = document.querySelectorAll('input[type=date]');
   const today = format(new Date(), 'yyyy-MM-dd');
@@ -151,4 +193,6 @@ export {
   hideMenu,
   updateSelectOptions,
   updateSelectValues,
+  squashEdit,
+  showRename,
 };

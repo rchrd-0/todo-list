@@ -24,7 +24,7 @@ function createTask() {
   const newTask = taskFactory(taskId, taskName, taskDescription, date, taskProject);
   taskMaster.push(newTask);
 
-  hideMenu('add-task');
+  hideMenu('add-task-menu');
   // renderTaskList();
   reloadList();
 }
@@ -44,7 +44,7 @@ function editTask() {
   thisTask.description = taskDescription;
   thisTask.date = !taskDate ? null : parseISO(taskDate);
   thisTask.projectId = taskProject;
-  hideMenu('edit-task');
+  hideMenu('edit-task-menu');
   // renderTaskList();
   reloadList();
 }
