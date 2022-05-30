@@ -17,14 +17,16 @@ import {
   hideMenu,
 } from './form-controller';
 
-const generateTaskEvents = (elements, taskId) => {
+const generateTaskEvents = (elements, task) => {
   for (let i = 0; i < elements.length; i++) {
     if (i === 0) {
       // left
       const checkCircle = document.createElement('button');
       checkCircle.setAttribute('type', 'button');
       checkCircle.classList.add('item-check');
-      checkCircle.dataset.taskId = taskId;
+      checkCircle.dataset.taskId = task.id;
+      checkCircle.dataset.priority = task.priority;
+      checkCircle.dataset.completed = task.completed;
       checkCircle.addEventListener('click', () =>
         completeTask(checkCircle.dataset.taskId)
       );
@@ -38,7 +40,7 @@ const generateTaskEvents = (elements, taskId) => {
         const button = document.createElement('button');
         button.setAttribute('type', 'button');
         button.classList.add(rightSideBtns[j]);
-        button.dataset.taskId = taskId;
+        button.dataset.taskId = task.id;
         if (j === 0) {
           button.addEventListener('click', () =>
             showEdit(button.dataset.taskId)
@@ -91,7 +93,7 @@ const createTaskItem = (task) => {
     elements[i].append(details);
   }
 
-  elements = generateTaskEvents(elements, taskId);
+  elements = generateTaskEvents(elements, task);
   taskItem.append(...elements);
 
   return taskItem;

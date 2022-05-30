@@ -157,6 +157,37 @@ footer {
   border: 1px solid black;
 }
 
+.task-item .item-check {
+  width: 35px;
+  height: 35px;
+  background-position: center;
+  background-size: 30px;
+  background-repeat: no-repeat;
+}
+
+.item-check[data-completed="false"][data-priority="none"] {
+  background-image: url("./assets/icons/circle-none.svg");
+}
+
+.item-check[data-completed="false"][data-priority="low"] {
+  background-image: url("./assets/icons/circle-low.svg");
+}
+
+.item-check[data-completed="false"][data-priority="high"] {
+  background-image: url("./assets/icons/circle-high.svg");
+}
+.item-check[data-completed="true"][data-priority="none"] {
+  background-image: url("./assets/icons/check-none.svg");
+}
+
+.item-check[data-completed="true"][data-priority="low"] {
+  background-image: url("./assets/icons/check-low.svg");
+}
+
+.item-check[data-completed="true"][data-priority="high"] {
+  background-image: url("./assets/icons/check-high.svg");
+}
+
 /* Menus/forms section */
 
 #menus {
@@ -198,6 +229,6 @@ input[type="radio"] {
   outline: 1px solid black;
 }
 
-input[type='radio']:checked + div.priority-icon {
+input[type="radio"]:checked + div.priority-icon {
   outline: 1px solid red;
 }
