@@ -29,8 +29,8 @@ const updateSelectOptions = () => {
 const updateSelectValues = () => {
   const listId = Number(document.querySelector('#main-display').dataset.listId);
   const addTaskForm = document.querySelector('#add-task-form');
-  const projectSelect = addTaskForm.querySelector('select');
-  projectSelect.value = listId > 3 ? listId : 3;
+  const projectSelectAdd = addTaskForm.querySelector('select');
+  projectSelectAdd.value = listId > 3 ? listId : 3;
 };
 
 const validateNameInput = (form) => {
@@ -108,6 +108,7 @@ const showRename = (id, projectItem) => {
   projectList.insertBefore(renameProjectMenu, thisItem);
   thisItem.classList.add('display-none');
   renameProjectMenu.classList.remove('display-none');
+  validateNameInput(renameProjectForm);
 };
 
 const hideRename = (menu) => {
