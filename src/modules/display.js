@@ -5,8 +5,13 @@ import {
   addDays,
   startOfToday,
 } from 'date-fns';
-import { taskMaster } from './tasks';
-import { projectMaster } from './projects';
+import _ from 'lodash';
+import { taskMaster, storeTaskList, initializeTasks } from './tasks';
+import {
+  projectMaster,
+  storeProjectList,
+  initializeProjects,
+} from './projects';
 import {
   initializeFormController,
   showEdit,
@@ -132,6 +137,8 @@ const renderTaskList = (listName, listId, taskList) => {
     }
   });
   updateSelectValues();
+  storeTaskList();
+  storeProjectList();
 };
 
 const findList = (listId) => {
@@ -151,7 +158,7 @@ const findList = (listId) => {
     taskList = projectMaster.findProject(idNum).taskList();
   }
   return taskList;
-}
+};
 
 const openList = (id) => {
   const idNum = Number(id);
@@ -236,6 +243,8 @@ const addProjectToList = (project) => {
   projectList.appendChild(projectItem);
   updateSelectOptions();
   updateSelectValues();
+  storeTaskList();
+  storeProjectList();
 };
 
 const updateProjectList = (id) => {
@@ -252,26 +261,9 @@ const updateProjectList = (id) => {
   });
   updateSelectOptions();
   updateSelectValues();
+  storeTaskList();
+  storeProjectList();
 };
-
-function removeTask(id) {
-  squashEdit(id);
-  taskMaster.remove(id);
-  reloadList();
-}
-
-function clearCompletedTasks() {
-  const currentList = document.querySelector('#main-display').dataset.listId;
-  const taskList = findList(currentList);
-  const completedTasks = taskList.filter((task) => task.completed === true);
-  completedTasks.forEach(task => removeTask(task.id));
-}
-
-function completeTask(id) {
-  const thisTask = taskMaster.findTask(id);
-  thisTask.completed = !thisTask.completed;
-  reloadList();
-}
 
 function removeProject(projectItem) {
   const projectId = Number(projectItem.dataset.projectId);
@@ -295,6 +287,25 @@ function removeProject(projectItem) {
   hideMenu('edit-task-menu');
 }
 
+function removeTask(id) {
+  squashEdit(id);
+  taskMaster.remove(id);
+  reloadList();
+}
+
+function clearCompletedTasks() {
+  const currentList = document.querySelector('#main-display').dataset.listId;
+  const taskList = findList(currentList);
+  const completedTasks = taskList.filter((task) => task.completed === true);
+  completedTasks.forEach((task) => removeTask(task.id));
+}
+
+function completeTask(id) {
+  const thisTask = taskMaster.findTask(id);
+  thisTask.completed = !thisTask.completed;
+  reloadList();
+}
+
 function isWithinWeek(task) {
   return isWithinInterval(task.date, {
     start: startOfToday(),
@@ -311,9 +322,18 @@ const initializeButtonEvents = () => {
   removeCompleted.addEventListener('click', clearCompletedTasks);
 };
 
+const retrieveStorage = () => {
+  initializeTasks();
+  initializeProjects();
+  const storedProjectList = _.drop(projectMaster.read(), 1);
+  storedProjectList.forEach(project => addProjectToList(project));
+};
+
 const initializeUI = () => {
+  retrieveStorage();
   initializeFormController();
   initializeButtonEvents();
+  window.addEventListener('load', () => openList(3));
 };
 
 export { initializeUI, reloadList, addProjectToList };

@@ -6,18 +6,18 @@ const projectFactory = (id, name) => {
   return {
     taskList,
     get id() {
-      return id
+      return id;
     },
     set id(newId) {
       id = newId;
     },
     get name() {
-      return name
+      return name;
     },
     set name(newName) {
-      name = newName
-    }
-  }
+      name = newName;
+    },
+  };
 };
 
 const projectMaster = (() => {
@@ -49,4 +49,23 @@ const projectMaster = (() => {
   };
 })();
 
-export { projectFactory, projectMaster };
+const saveToLocalStorage = () => {
+  localStorage.setItem('projectList', JSON.stringify(projectMaster.read()));
+};
+
+function initializeProjects() {
+  if ('projectList' in localStorage) {
+    let projects = JSON.parse(localStorage.getItem('projectList'));
+    projects = _.drop(projects, 1);
+    projects.forEach((project) => {
+      projectMaster.push(projectFactory(...Object.values(project)));
+    });
+  }
+}
+
+export {
+  projectFactory,
+  projectMaster,
+  saveToLocalStorage as storeProjectList,
+  initializeProjects,
+};

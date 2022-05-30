@@ -10,9 +10,9 @@ debug.addEventListener('click', () => {
   console.log(taskMaster.read());
   const projectList = projectMaster.read();
   console.log(projectList);
-  projectList.forEach(project => {
+  projectList.forEach((project) => {
     console.log(project.taskList());
-  })
+  });
 });
 
 intializeTaskHandler();

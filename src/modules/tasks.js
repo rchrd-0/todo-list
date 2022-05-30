@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { parseJSON } from 'date-fns';
 
 const taskFactory = (
   id,
@@ -88,4 +89,23 @@ const taskMaster = (() => {
   };
 })();
 
-export { taskFactory, taskMaster };
+function saveToLocalStorage() {
+  localStorage.setItem('taskList', JSON.stringify(taskMaster.read()));
+}
+
+function initializeTasks() {
+  if ('taskList' in localStorage) {
+    const tasks = JSON.parse(localStorage.getItem('taskList'));
+    tasks.forEach((task) => {
+      task.date = task.date ? parseJSON(task.date) : null;
+      taskMaster.push(taskFactory(...Object.values(task)));
+    });
+  }
+}
+
+export {
+  taskFactory,
+  taskMaster,
+  saveToLocalStorage as storeTaskList,
+  initializeTasks,
+};

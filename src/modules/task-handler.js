@@ -34,7 +34,6 @@ function createTask() {
   taskMaster.push(newTask);
 
   hideMenu('add-task-menu');
-  // renderTaskList();
   reloadList();
 }
 
