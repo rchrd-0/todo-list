@@ -99,6 +99,15 @@ footer {
   border: 1px solid black;
 }
 
+#rename-project-form {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#rename-project-form .menu-buttons {
+  width: 100%;
+}
+
 /* Task list display */
 
 .task-list {

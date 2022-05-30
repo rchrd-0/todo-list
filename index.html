@@ -10,7 +10,6 @@
   </head>
   <body>
     <div id="main-container">
-
       <button type="button" id="debug">Debug</button>
 
       <nav>
@@ -55,13 +54,45 @@
                 >
                   Add
                 </button>
-                <button type="button" class="cancel" data-menu="add-project">
+                <button
+                  type="button"
+                  class="cancel"
+                  data-menu="add-project-menu"
+                >
                   Cancel
                 </button>
               </div>
             </form>
           </div>
           <div id="project-list">
+            <div id="rename-project-menu" class="display-none">
+                <form id="rename-project-form" data-project-id="null">
+                  <div class="nav-icon"></div>
+                  <input
+                    type="text"
+                    name="name"
+                    id="project-name-edit"
+                    required
+                  />
+                <div class="menu-buttons">
+                  <button
+                    type="button"
+                    id="submit-rename-project"
+                    class="submit"
+                    disabled
+                  >
+                    Add
+                  </button>
+                  <button
+                    type="button"
+                    class="cancel"
+                    data-menu="rename-project-menu"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
             <!-- <div class="project-item" data-project-id="null">
               <div class="project-left">
                 <div class="nav-icon"></div>
@@ -134,7 +165,7 @@
               <button type="button" id="submit-add" class="submit" disabled>
                 Add
               </button>
-              <button type="button" class="cancel" data-menu="add-task">
+              <button type="button" class="cancel" data-menu="add-task-menu">
                 Cancel
               </button>
             </div>
@@ -162,7 +193,7 @@
               <button type="button" id="submit-edit" class="submit" disabled>
                 Edit
               </button>
-              <button type="button" class="cancel" data-menu="edit-task">
+              <button type="button" class="cancel" data-menu="edit-task-menu">
                 Cancel
               </button>
             </div>
