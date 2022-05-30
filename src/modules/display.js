@@ -134,9 +134,28 @@ const renderTaskList = (listName, listId, taskList) => {
   updateSelectValues();
 };
 
+const findList = (listId) => {
+  const idNum = Number(listId);
+  let taskList = taskMaster.read();
+  if (idNum < 3) {
+    switch (idNum) {
+      case 1:
+        taskList = taskList.filter((task) => isToday(task.date));
+        break;
+      case 2:
+        taskList = taskList.filter((task) => isWithinWeek(task));
+        break;
+      // No default
+    }
+  } else {
+    taskList = projectMaster.findProject(idNum).taskList();
+  }
+  return taskList;
+}
+
 const openList = (id) => {
   const idNum = Number(id);
-  let taskList = taskMaster.read();
+  const taskList = findList(id);
   let listName;
   if (idNum < 3) {
     switch (idNum) {
@@ -144,19 +163,15 @@ const openList = (id) => {
         listName = 'All';
         break;
       case 1:
-        taskList = taskList.filter((task) => isToday(task.date));
         listName = 'Today';
         break;
       case 2:
-        taskList = taskList.filter((task) => isWithinWeek(task));
         listName = 'Next 7 Days';
         break;
       // No default
     }
   } else {
-    const project = projectMaster.findProject(id);
-    listName = project.name;
-    taskList = project.taskList();
+    listName = projectMaster.findProject(id).name;
   }
   renderTaskList(listName, id, taskList);
 };
@@ -215,26 +230,6 @@ const createProjectItem = (project) => {
   return displayWrapper;
 };
 
-// const clearProjectList = () => {
-//   const projectList = document.querySelector('#project-list');
-//   while (projectList.childElementCount > 1) {
-//     projectList.removeChild(projectList.lastElementChild);
-//   }
-// };
-
-// const renderProjectList = () => {
-//   const listDiv = document.querySelector('#project-list');
-//   // Filters out inbox project (id=3), projects start at id=4
-//   const projectList = projectMaster.read().filter((project) => project.id > 3);
-//   clearProjectList();
-//   projectList.forEach((project) => {
-//     const projectItem = createProjectItem(project);
-//     listDiv.appendChild(projectItem);
-//   });
-//   updateSelectOptions();
-//   updateSelectValues();
-// };
-
 const addProjectToList = (project) => {
   const projectList = document.querySelector('#project-list');
   const projectItem = createProjectItem(project);
@@ -263,6 +258,13 @@ function removeTask(id) {
   squashEdit(id);
   taskMaster.remove(id);
   reloadList();
+}
+
+function clearCompletedTasks() {
+  const currentList = document.querySelector('#main-display').dataset.listId;
+  const taskList = findList(currentList);
+  const completedTasks = taskList.filter((task) => task.completed === true);
+  completedTasks.forEach(task => removeTask(task.id));
 }
 
 function completeTask(id) {
@@ -300,16 +302,18 @@ function isWithinWeek(task) {
   });
 }
 
-const initializeNavHomeEvents = () => {
+const initializeButtonEvents = () => {
   const homeLinks = document.querySelectorAll('.home-item');
   homeLinks.forEach((link) => {
     link.addEventListener('click', () => openList(link.dataset.sortId));
   });
+  const removeCompleted = document.querySelector('#remove-completed');
+  removeCompleted.addEventListener('click', clearCompletedTasks);
 };
 
 const initializeUI = () => {
   initializeFormController();
-  initializeNavHomeEvents();
+  initializeButtonEvents();
 };
 
 export { initializeUI, reloadList, addProjectToList };
