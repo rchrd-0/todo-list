@@ -174,3 +174,30 @@ footer {
 #menus > div {
   border: 1px solid black;
 }
+
+.task-priority {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.input-label {
+  width: 100%;
+}
+
+input[type="radio"] {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+.priority-icon {
+  width: 25px;
+  height: 25px;
+  outline: 1px solid black;
+}
+
+input[type='radio']:checked + div.priority-icon {
+  outline: 1px solid red;
+}

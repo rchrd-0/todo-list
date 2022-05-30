@@ -66,12 +66,22 @@ const getTaskInfo = (id) => {
   const editDescription = editTaskForm.querySelector('#task-description-edit');
   const editDate = editTaskForm.querySelector('#task-date-edit');
   const editProject = editTaskForm.querySelector('#project-edit');
+  const editPriority = editTaskForm.querySelectorAll(
+    'input[name=priority-edit]'
+  );
 
   const thisTask = taskMaster.findTask(id);
   editName.value = thisTask.name;
   editDescription.value = thisTask.description;
   editDate.value = !thisTask.date ? '' : format(thisTask.date, 'yyyy-MM-dd');
   editProject.value = thisTask.projectId;
+  editPriority.forEach(input => {
+    if (input.value === thisTask.priority) {
+      input.setAttribute('checked', '');
+    } else {
+      input.removeAttribute('checked');
+    }
+  })
 };
 
 const showEdit = (id) => {
@@ -150,7 +160,7 @@ const squashEdit = (id) => {
 
     if (idNum === elementId) {
       hideMenu(editTaskForm.parentElement.getAttribute('id'));
-    } 
+    }
   }
 };
 const setMinDate = () => {

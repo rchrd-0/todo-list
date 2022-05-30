@@ -18,10 +18,19 @@ function createTask() {
   const taskName = document.querySelector('#task-name-add').value;
   const taskDescription = document.querySelector('#task-description-add').value;
   const taskDate = document.querySelector('#task-date-add').value;
-  const taskProject = Number(document.querySelector('#project-add').value)
-
+  const taskProject = Number(document.querySelector('#project-add').value);
+  const taskPriority = document.querySelector(
+    'input[name=priority-add]:checked'
+  ).value;
   const date = !taskDate ? null : parseISO(taskDate);
-  const newTask = taskFactory(taskId, taskName, taskDescription, date, taskProject);
+  const newTask = taskFactory(
+    taskId,
+    taskName,
+    taskDescription,
+    date,
+    taskProject,
+    taskPriority
+  );
   taskMaster.push(newTask);
 
   hideMenu('add-task-menu');
@@ -38,15 +47,19 @@ function editTask() {
     '#task-description-edit'
   ).value;
   const taskDate = document.querySelector('#task-date-edit').value;
-  const taskProject = Number(document.querySelector('#project-edit').value)
+  const taskProject = Number(document.querySelector('#project-edit').value);
+  const taskPriority = [
+    ...document.querySelectorAll('input[name=priority-edit]'),
+  ].find((priority) => priority.checked).value;
 
   thisTask.name = taskName;
   thisTask.description = taskDescription;
   thisTask.date = !taskDate ? null : parseISO(taskDate);
   thisTask.projectId = taskProject;
+  thisTask.priority = taskPriority;
+
   hideMenu('edit-task-menu');
-  // renderTaskList();
   reloadList();
 }
 
-export { initializeButtonEvents as intializeTaskHandler, createTask, editTask }
+export { initializeButtonEvents as intializeTaskHandler, createTask, editTask };

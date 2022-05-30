@@ -6,6 +6,7 @@ const taskFactory = (
   description,
   date,
   projectId,
+  priority,
   completed = false
 ) => {
   return {
@@ -38,6 +39,12 @@ const taskFactory = (
     },
     set projectId(newProjectId) {
       projectId = newProjectId;
+    },
+    get priority() {
+      return priority;
+    },
+    set priority(newPriority) {
+      priority = newPriority;
     },
     get completed() {
       return completed;
