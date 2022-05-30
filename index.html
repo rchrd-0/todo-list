@@ -66,14 +66,14 @@
           </div>
           <div id="project-list">
             <div id="rename-project-menu" class="display-none">
-                <form id="rename-project-form" data-rename-id="null">
-                  <div class="nav-icon"></div>
-                  <input
-                    type="text"
-                    name="name"
-                    id="project-name-edit"
-                    required
-                  />
+              <form id="rename-project-form" data-rename-id="null">
+                <div class="nav-icon"></div>
+                <input
+                  type="text"
+                  name="name"
+                  id="project-name-edit"
+                  required
+                />
                 <div class="menu-buttons">
                   <button
                     type="button"
@@ -161,6 +161,37 @@
             ></textarea>
             <input type="date" name="date" id="task-date-add" />
             <select name="project" id="project-add"></select>
+            <div class="task-priority">
+              <div class="input-label">Priority</div>
+              <label for="priority-high-add">
+                <input
+                  type="radio"
+                  name="priority-add"
+                  id="priority-high-add"
+                  value="high"
+                />
+                <div class="priority-icon">High</div>
+              </label>
+              <label for="priority-low-add">
+                <input
+                  type="radio"
+                  name="priority-add"
+                  id="priority-low-add"
+                  value="low"
+                />
+                <div class="priority-icon">Low</div>
+              </label>
+              <label for="priority-none-add">
+                <input
+                  type="radio"
+                  name="priority-add"
+                  id="priority-none-add"
+                  value="none"
+                  checked
+                />
+                <div class="priority-icon">None</div>
+              </label>
+            </div>
             <div class="menu-buttons">
               <button type="button" id="submit-add" class="submit" disabled>
                 Add
@@ -189,6 +220,37 @@
             ></textarea>
             <input type="date" name="date" id="task-date-edit" />
             <select name="project" id="project-edit"></select>
+            <div class="task-priority">
+              <div class="input-label">Priority</div>
+              <label for="priority-high-edit">
+                <input
+                  type="radio"
+                  name="priority-edit"
+                  id="priority-high-edit"
+                  value="high"
+                />
+                <div class="priority-icon">High</div>
+              </label>
+              <label for="priority-low-edit">
+                <input
+                  type="radio"
+                  name="priority-edit"
+                  id="priority-low-edit"
+                  value="low"
+                />
+                <div class="priority-icon">Low</div>
+              </label>
+              <label for="priority-none-edit">
+                <input
+                  type="radio"
+                  name="priority-edit"
+                  id="priority-none-edit"
+                  value="none"
+                  checked
+                />
+                <div class="priority-icon">None</div>
+              </label>
+            </div>
             <div class="menu-buttons">
               <button type="button" id="submit-edit" class="submit" disabled>
                 Edit
