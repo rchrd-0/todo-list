@@ -75,13 +75,13 @@ const getTaskInfo = (id) => {
   editDescription.value = thisTask.description;
   editDate.value = !thisTask.date ? '' : format(thisTask.date, 'yyyy-MM-dd');
   editProject.value = thisTask.projectId;
-  editPriority.forEach(input => {
+  editPriority.forEach((input) => {
     if (input.value === thisTask.priority) {
       input.setAttribute('checked', '');
     } else {
       input.removeAttribute('checked');
     }
-  })
+  });
 };
 
 const showEdit = (id) => {

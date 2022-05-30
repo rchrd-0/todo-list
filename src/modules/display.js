@@ -313,27 +313,27 @@ function isWithinWeek(task) {
   });
 }
 
-const initializeButtonEvents = () => {
+function initializeButtonEvents() {
   const homeLinks = document.querySelectorAll('.home-item');
   homeLinks.forEach((link) => {
     link.addEventListener('click', () => openList(link.dataset.sortId));
   });
   const removeCompleted = document.querySelector('#remove-completed');
   removeCompleted.addEventListener('click', clearCompletedTasks);
-};
+}
 
-const retrieveStorage = () => {
+function retrieveStorage() {
   initializeTasks();
   initializeProjects();
   const storedProjectList = _.drop(projectMaster.read(), 1);
-  storedProjectList.forEach(project => addProjectToList(project));
-};
+  storedProjectList.forEach((project) => addProjectToList(project));
+}
 
-const initializeUI = () => {
+function initializeUI() {
   retrieveStorage();
   initializeFormController();
   initializeButtonEvents();
   window.addEventListener('load', () => openList(3));
-};
+}
 
 export { initializeUI, reloadList, addProjectToList };
