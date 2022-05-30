@@ -1,6 +1,6 @@
 import { projectFactory, projectMaster } from './projects';
 import { hideMenu, showAddProject, squashEdit } from './form-controller';
-import { renderProjectList, reloadList } from './display';
+import { reloadList, addProjectToList } from './display';
 
 function createProject() {
   const projectId = projectMaster.read().length + 3;
@@ -9,18 +9,27 @@ function createProject() {
   const newProject = projectFactory(projectId, projectName);
   projectMaster.push(newProject);
   hideMenu('add-project-menu');
-  renderProjectList();
+  addProjectToList(newProject);
 }
 
 function renameProject() {
-  const { projectId } = document.querySelector('#rename-project-form').dataset;
-  const project = projectMaster.findProject(projectId);
+  const { renameId } = document.querySelector('#rename-project-form').dataset;
+  const project = projectMaster.findProject(renameId);
   const newName = document.querySelector('#project-name-edit').value;
+  const projectTitle = findInList(renameId).querySelector('span');
   project.name = newName;
+  projectTitle.textContent = newName;
   project.taskList().forEach((task) => squashEdit(task.id));
   reloadList();
-  renderProjectList();
   hideMenu('rename-project-menu');
+}
+
+function findInList(id) {
+  const projectItems = document.querySelectorAll('.project-item');
+  const thisItem = [...projectItems].find(
+    (item) => item.dataset.projectId === id
+  );
+  return thisItem;
 }
 
 function initializeButtonEvents() {

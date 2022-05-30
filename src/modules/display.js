@@ -13,7 +13,8 @@ import {
   showRename,
   updateSelectOptions,
   updateSelectValues,
-  squashEdit
+  squashEdit,
+  hideMenu,
 } from './form-controller';
 
 const generateTaskEvents = (elements, taskId) => {
@@ -164,16 +165,17 @@ const reloadList = (
   openList(id);
 };
 
-const generateProjectEvents = (projectItem) => {
-  const { projectId } = projectItem.dataset;
+const generateProjectEvents = (project, projectItem) => {
   const projectLeft = projectItem.querySelector('.project-left');
-  projectLeft.addEventListener('click', () => openList(projectId));
+  projectLeft.addEventListener('click', () => openList(project.id));
 
   const projectRemove = projectItem.querySelector('.project-remove');
   projectRemove.addEventListener('click', () => removeProject(projectItem));
 
   const projectEdit = projectItem.querySelector('.project-edit');
-  projectEdit.addEventListener('click', () => showRename(projectId, projectItem))
+  projectEdit.addEventListener('click', () =>
+    showRename(project.id, projectItem)
+  );
 
   return projectItem;
 };
@@ -205,34 +207,58 @@ const createProjectItem = (project) => {
   }
 
   projectItem.append(projectLeft, projectButtons);
-  projectItem = generateProjectEvents(projectItem);
+  projectItem = generateProjectEvents(project, projectItem);
   displayWrapper.appendChild(projectItem);
 
   return displayWrapper;
 };
 
-const clearProjectList = () => {
+// const clearProjectList = () => {
+//   const projectList = document.querySelector('#project-list');
+//   while (projectList.childElementCount > 1) {
+//     projectList.removeChild(projectList.lastElementChild);
+//   }
+// };
+
+// const renderProjectList = () => {
+//   const listDiv = document.querySelector('#project-list');
+//   // Filters out inbox project (id=3), projects start at id=4
+//   const projectList = projectMaster.read().filter((project) => project.id > 3);
+//   clearProjectList();
+//   projectList.forEach((project) => {
+//     const projectItem = createProjectItem(project);
+//     listDiv.appendChild(projectItem);
+//   });
+//   updateSelectOptions();
+//   updateSelectValues();
+// };
+
+const addProjectToList = (project) => {
   const projectList = document.querySelector('#project-list');
-  while (projectList.childElementCount > 1) {
-    projectList.removeChild(projectList.lastElementChild);
-  }
+  const projectItem = createProjectItem(project);
+  projectList.appendChild(projectItem);
+  updateSelectOptions();
+  updateSelectValues();
 };
 
-const renderProjectList = () => {
-  const listDiv = document.querySelector('#project-list');
-  // Filters out inbox project (id=3), projects start at id=4
-  const projectList = projectMaster.read().filter((project) => project.id > 3);
-  clearProjectList();
-  projectList.forEach((project) => {
-    const projectItem = createProjectItem(project);
-    listDiv.appendChild(projectItem);
+const updateProjectList = (id) => {
+  const renameProjectForm = document.querySelector('#rename-project-form');
+  const { renameId } = renameProjectForm.dataset;
+  if (renameId !== 'null' && Number(renameId) > id) {
+    renameProjectForm.dataset.renameId -= 1;
+  }
+  const projectElements = document.querySelectorAll('[data-project-id]');
+  [...projectElements].forEach((element) => {
+    if (Number(element.dataset.projectId) > id) {
+      element.dataset.projectId -= 1;
+    }
   });
   updateSelectOptions();
   updateSelectValues();
 };
 
 function removeTask(id) {
-  squashEdit(id)
+  squashEdit(id);
   taskMaster.remove(id);
   reloadList();
 }
@@ -248,10 +274,7 @@ function removeProject(projectItem) {
   let listId = Number(document.querySelector('#main-display').dataset.listId);
   // Also removes tasks that belong to project to be removed
   const existingTasks = projectMaster.findProject(projectId).taskList();
-  existingTasks.forEach((task) => {
-    squashEdit(task.id)
-    taskMaster.remove(task.id);
-  });
+  existingTasks.forEach((task) => taskMaster.remove(task.id));
   projectMaster.remove(projectId);
   projectItem.parentElement.remove();
 
@@ -264,8 +287,8 @@ function removeProject(projectItem) {
   } else {
     reloadList();
   }
-
-  renderProjectList();
+  updateProjectList(projectId);
+  hideMenu('edit-task-menu');
 }
 
 function isWithinWeek(task) {
@@ -287,4 +310,4 @@ const initializeUI = () => {
   initializeNavHomeEvents();
 };
 
-export { initializeUI, reloadList, renderProjectList };
+export { initializeUI, reloadList, addProjectToList };

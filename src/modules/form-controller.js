@@ -88,13 +88,9 @@ const showEdit = (id) => {
 const showAddProject = () => {
   const showAddProjectMenu = document.querySelector('#add-project-menu');
   const addProjectForm = showAddProjectMenu.querySelector('form');
-  addProjectForm.reset();
   showAddProjectMenu.classList.remove('display-none');
   validateNameInput(addProjectForm);
 };
-
-
-
 
 const showRename = (id, projectItem) => {
   const renameProjectMenu = document.querySelector('#rename-project-menu');
@@ -102,8 +98,8 @@ const showRename = (id, projectItem) => {
   const nameInput = renameProjectForm.querySelector('input[name="name"]');
   const projectList = document.querySelector('#project-list');
   const thisItem = projectItem.parentElement;
-  
-  renameProjectForm.dataset.projectId = id;
+
+  renameProjectForm.dataset.renameId = id;
   nameInput.value = projectMaster.findProject(id).name;
   projectList.insertBefore(renameProjectMenu, thisItem);
   thisItem.classList.add('display-none');
@@ -114,10 +110,11 @@ const showRename = (id, projectItem) => {
 const hideRename = (menu) => {
   const projectList = document.querySelector('#project-list');
   const renameMenu = menu;
-  renameMenu.dataset.projectId = null;
+  const renameForm = menu.firstElementChild;
+  renameForm.dataset.renameId = null;
   renameMenu.nextElementSibling.classList.remove('display-none');
   projectList.insertBefore(renameMenu, projectList.firstElementChild);
-}
+};
 
 const hideMenu = (btn) => {
   let menu;
@@ -127,7 +124,7 @@ const hideMenu = (btn) => {
       break;
     case 'edit-task-menu':
       menu = document.querySelector('#edit-task-menu');
-      menu.dataset.taskId = null;
+      menu.firstElementChild.dataset.taskId = null;
       break;
     case 'add-project-menu':
       menu = document.querySelector('#add-project-menu');
@@ -146,14 +143,14 @@ const hideMenu = (btn) => {
 
 const squashEdit = (id) => {
   const editTaskForm = document.querySelector('#edit-task-form');
-  
+
   if (![id, editTaskForm.dataset.taskId].includes('null')) {
     const idNum = Number(id);
     const elementId = Number(editTaskForm.dataset.taskId);
-    
+
     if (idNum === elementId) {
       hideMenu(editTaskForm.parentElement.getAttribute('id'));
-    }
+    } 
   }
 };
 const setMinDate = () => {
