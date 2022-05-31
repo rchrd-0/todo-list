@@ -527,6 +527,10 @@ nav {
   color: var(--text);
 }
 
+#completed-tasks .task-item {
+  filter: opacity(0.6);
+}
+
 .task-item > div {
   display: flex;
   align-items: center;
