@@ -2,7 +2,7 @@
 
 :root {
   --primary-base: #a0c8ff;
-  --primary-highlight: #5193E3;
+  --primary-highlight: #5193e3;
   --primary-neutral: #d2e4ff;
   --text: #d7e2fa;
 
@@ -74,6 +74,13 @@ body {
 
 nav {
   flex: 0 0 360px;
+  overflow: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+nav::-webkit-scrollbar {
+  display: none;
 }
 
 #menus {
@@ -101,6 +108,21 @@ footer {
   font-weight: 600;
   color: var(--primary-base);
   border-bottom: 2px solid var(--primary-base);
+}
+
+.section-header,
+.project-left,
+.details {
+  overflow: hidden;
+}
+
+.section-header h1,
+.project-left span,
+.details h2,
+.details p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Form inputs */
@@ -175,6 +197,7 @@ button {
 }
 
 .section-header button {
+  flex-shrink: 0;
   color: var(--primary-base);
   background-color: initial;
   border: 1px solid var(--primary-base);
@@ -237,6 +260,7 @@ button.cancel:hover {
 }
 
 .project-buttons {
+  flex-shrink: 0;
   display: none;
 }
 
@@ -263,11 +287,11 @@ button.cancel:hover {
 }
 
 .project-edit {
-  background-image: url('./assets/icons/edit-1.svg');
+  background-image: url("./assets/icons/edit-1.svg");
 }
 
 .project-remove {
-  background-image: url('./assets/icons/trash-0.svg');
+  background-image: url("./assets/icons/trash-0.svg");
 }
 
 .all-icon {
@@ -287,6 +311,7 @@ button.cancel:hover {
 }
 
 .project-icon {
+  flex-shrink: 0;
   background-image: url("./assets/icons/book.svg");
 }
 
@@ -320,6 +345,7 @@ button.cancel:hover {
 }
 
 .task-item .item-check {
+  flex-shrink: 0;
   padding: 0;
   width: 35px;
   height: 35px;
@@ -467,6 +493,7 @@ nav {
   height: 65px;
   padding: 10px;
   display: flex;
+  gap: 10px;
   justify-content: space-between;
   border-radius: 4px;
   border: 1px solid var(--text);
@@ -480,13 +507,13 @@ nav {
 }
 
 .left {
-  flex: 1;
+  width: 550px;
 }
 
 .right {
+  width: 220px;
   display: flex;
   justify-content: flex-end;
-  width: 200px;
   text-align: right;
 }
 

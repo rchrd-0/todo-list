@@ -1,5 +1,5 @@
 import { projectFactory, projectMaster } from './projects';
-import { hideMenu, showAddProject, squashEdit } from './form-controller';
+import { hideMenu, showAddProject, squashEdit, updateSelectOptions } from './form-controller';
 import { reloadList, addProjectToList } from './display';
 
 const findInList = (id) => {
@@ -28,7 +28,9 @@ const renameProject = () => {
   project.name = newName;
   projectTitle.textContent = newName;
   project.taskList().forEach((task) => squashEdit(task.id));
+  updateSelectOptions();
   reloadList();
+
   hideMenu('rename-project-menu');
 };
 
