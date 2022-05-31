@@ -174,6 +174,7 @@ const renderTaskList = (listName, listId, taskList) => {
   mainDisplay.dataset.listId = listId;
 
   clearTaskList();
+
   if (taskList.length < 1) {
     generateEmptySplash();
   } else {
