@@ -104,6 +104,32 @@ const createTaskItem = (task) => {
   return taskItem;
 };
 
+const setActive = (id) => {
+  const idNum = Number(id);
+  const homeItems = document.querySelectorAll('.home-item');
+  const projectItems = document.querySelectorAll('.project-item');
+
+  if (id < 4) {
+    [...projectItems].forEach(pI => pI.parentElement.classList.remove('set-active'));
+    [...homeItems].forEach((i) => {
+      if ((Number(i.dataset.sortId)) === idNum) {
+        i.classList.add('set-active');
+      } else {
+        i.classList.remove('set-active');
+      }
+    });
+  } else {
+    [...homeItems].forEach(i => i.classList.remove('set-active'));
+    [...projectItems].forEach(pI => {
+      if ((Number(pI.dataset.projectId)) === idNum) {
+        pI.parentElement.classList.add('set-active');
+      } else {
+        pI.parentElement.classList.remove('set-active');
+      }
+    })
+  }
+};
+
 const clearTaskList = () => {
   const pendingTaskList = document.querySelector('#pending-task-list');
   const completedTaskList = document.querySelector('#completed-task-list');
@@ -180,6 +206,7 @@ const openList = (id) => {
   } else {
     listName = projectMaster.findProject(id).name;
   }
+  setActive(id);
   renderTaskList(listName, id, taskList);
 };
 
@@ -215,7 +242,7 @@ const createProjectItem = (project) => {
   const projectLeft = document.createElement('div');
   projectLeft.classList.add('project-left');
   const navIcon = document.createElement('div');
-  navIcon.classList.add('nav-icon');
+  navIcon.classList.add('nav-icon', 'project-icon');
   const projectName = document.createElement('span');
   projectName.textContent = project.name;
   projectLeft.append(navIcon, projectName);

@@ -109,6 +109,10 @@ const showRename = (id, projectItem) => {
   const projectList = document.querySelector('#project-list');
   const thisItem = projectItem.parentElement;
 
+  if (renameProjectForm.dataset.projectId !== 'null') {
+    hideMenu('rename-project-menu')
+  }
+
   renameProjectForm.dataset.renameId = id;
   nameInput.value = projectMaster.findProject(id).name;
   projectList.insertBefore(renameProjectMenu, thisItem);
@@ -126,7 +130,27 @@ const hideRename = (menu) => {
   projectList.insertBefore(renameMenu, projectList.firstElementChild);
 };
 
-const hideMenu = (btn) => {
+
+
+const squashEdit = (id) => {
+  const editTaskForm = document.querySelector('#edit-task-form');
+
+  if (![id, editTaskForm.dataset.taskId].includes('null')) {
+    const idNum = Number(id);
+    const elementId = Number(editTaskForm.dataset.taskId);
+
+    if (idNum === elementId) {
+      hideMenu(editTaskForm.parentElement.getAttribute('id'));
+    }
+  }
+};
+const setMinDate = () => {
+  const dateInputs = document.querySelectorAll('input[type=date]');
+  const today = format(new Date(), 'yyyy-MM-dd');
+  dateInputs.forEach((input) => input.setAttribute('min', today));
+};
+
+function hideMenu(btn) {
   let menu;
   switch (btn) {
     case 'add-task-menu':
@@ -149,24 +173,6 @@ const hideMenu = (btn) => {
   const form = menu.querySelector('form');
   form.reset();
   menu.classList.add('display-none');
-};
-
-const squashEdit = (id) => {
-  const editTaskForm = document.querySelector('#edit-task-form');
-
-  if (![id, editTaskForm.dataset.taskId].includes('null')) {
-    const idNum = Number(id);
-    const elementId = Number(editTaskForm.dataset.taskId);
-
-    if (idNum === elementId) {
-      hideMenu(editTaskForm.parentElement.getAttribute('id'));
-    }
-  }
-};
-const setMinDate = () => {
-  const dateInputs = document.querySelectorAll('input[type=date]');
-  const today = format(new Date(), 'yyyy-MM-dd');
-  dateInputs.forEach((input) => input.setAttribute('min', today));
 };
 
 const initializeButtonEvents = () => {
