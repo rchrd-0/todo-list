@@ -2,6 +2,7 @@
 
 :root {
   --primary-base: #a0c8ff;
+  --primary-highlight: #5193E3;
   --primary-neutral: #d2e4ff;
   --text: #d7e2fa;
 
@@ -95,7 +96,7 @@ footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 10px 10px 0;
+  padding: 0 0 10px 0;
   font-size: 1.8rem;
   font-weight: 600;
   color: var(--primary-base);
@@ -121,8 +122,8 @@ select {
 input:focus,
 textarea:focus,
 select:focus {
-  outline: 1px solid var(--primary-base);
-  border: 1px solid var(--primary-base);
+  outline: 1px solid var(--primary-highlight);
+  border: 1px solid var(--primary-highlight);
 }
 
 input::placeholder,
@@ -235,6 +236,40 @@ button.cancel:hover {
   background-size: cover;
 }
 
+.project-buttons {
+  display: none;
+}
+
+.project-item:hover .project-buttons,
+.display-wrapper.set-active .project-buttons {
+  display: flex;
+  gap: 4px;
+  width: fit-content;
+}
+
+.project-item button {
+  width: 30px;
+  height: 30px;
+  background-color: initial;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 25px;
+  transition: background-color 0.2s ease;
+}
+
+.project-item button:hover {
+  background-color: var(--background-0);
+  transition: background-color 0.2s ease;
+}
+
+.project-edit {
+  background-image: url('./assets/icons/edit-1.svg');
+}
+
+.project-remove {
+  background-image: url('./assets/icons/trash-0.svg');
+}
+
 .all-icon {
   background-image: url("./assets/icons/list-0.svg");
 }
@@ -266,12 +301,12 @@ button.cancel:hover {
 }
 
 .item-buttons button:hover {
-  background-color: var(--background-1);
+  background-color: var(--background-2);
   transition: all 0.2s ease;
 }
 
 .item-buttons button:active {
-  background-color: var(--background-0);
+  background-color: var(--background-3);
   transition: all 0.2s ease;
 }
 
@@ -411,27 +446,6 @@ nav {
   gap: 12px;
   display: flex;
   align-items: center;
-}
-
-.project-buttons {
-  display: flex;
-  gap: 8px;
-  width: fit-content;
-}
-
-.project-item button {
-  width: 25px;
-  height: 25px;
-  border: 1px solid black;
-}
-
-#rename-project-form {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-#rename-project-form .menu-buttons {
-  width: 100%;
 }
 
 /* Task list display */
