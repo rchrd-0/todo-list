@@ -175,24 +175,20 @@ const renderTaskList = (listName, listId, taskList) => {
 
   clearTaskList();
 
-  if (taskList.length < 1) {
+  if (taskList.filter((task) => !task.completed).length < 1) {
     generateEmptySplash();
-  } else {
-    taskList.forEach((task) => {
-      const listItem = createTaskItem(task);
-      if (task.completed) {
-        completedTaskList.insertBefore(
-          listItem,
-          completedTaskList.firstElementChild
-        );
-      } else {
-        pendingTaskList.insertBefore(
-          listItem,
-          pendingTaskList.firstElementChild
-        );
-      }
-    });
   }
+  taskList.forEach((task) => {
+    const listItem = createTaskItem(task);
+    if (task.completed) {
+      completedTaskList.insertBefore(
+        listItem,
+        completedTaskList.firstElementChild
+      );
+    } else {
+      pendingTaskList.insertBefore(listItem, pendingTaskList.firstElementChild);
+    }
+  });
   updateSelectValues();
   storeTaskList();
   storeProjectList();
