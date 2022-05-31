@@ -10,31 +10,30 @@
   </head>
   <body>
     <div id="main-container">
-      <button type="button" id="debug">Debug</button>
-
       <nav>
+        <div id="logo"></div>
         <section id="home-nav">
           <div class="home-item" data-sort-id="0">
-            <div class="nav-icon"></div>
+            <div class="nav-icon all-icon"></div>
             <span>All</span>
           </div>
           <div class="home-item" data-sort-id="3">
-            <div class="nav-icon"></div>
+            <div class="nav-icon inbox-icon"></div>
             <span>Inbox</span>
           </div>
           <div class="home-item" data-sort-id="1">
-            <div class="nav-icon"></div>
+            <div class="nav-icon today-icon"></div>
             <span>Today</span>
           </div>
           <div class="home-item" data-sort-id="2">
-            <div class="nav-icon"></div>
+            <div class="nav-icon week-icon"></div>
             <span>Next 7 Days</span>
           </div>
         </section>
         <section id="project-nav">
-          <div id="project-header">
-            <h2>Projects</h2>
-            <button type="button" id="show-add-project">Add project</button>
+          <div id="project-header" class="section-header">
+            <h1>Projects</h1>
+            <button type="button" id="show-add-project" class="add-plus">Add project</button>
           </div>
           <div id="add-project-menu" class="display-none">
             <form id="add-project-form">
@@ -67,11 +66,12 @@
           <div id="project-list">
             <div id="rename-project-menu" class="display-none">
               <form id="rename-project-form" data-rename-id="null">
-                <div class="nav-icon"></div>
+                <div class="nav-icon project-icon"></div>
                 <input
                   type="text"
                   name="name"
                   id="project-name-edit"
+                  placeholder="Project name"
                   required
                 />
                 <div class="menu-buttons">
@@ -81,7 +81,7 @@
                     class="submit"
                     disabled
                   >
-                    Add
+                    Save
                   </button>
                   <button
                     type="button"
@@ -93,56 +93,25 @@
                 </div>
               </form>
             </div>
-            <!-- <div class="project-item" data-project-id="null">
-              <div class="project-left">
-                <div class="nav-icon"></div>
-                <span>Name</span>
-              </div>
-              <div class="project-buttons">
-                <button type="button" class="project-edit" data-project-id="null"></button>
-                <button type="button" class="project-remove" data-project-id="null"></button>
-              </div>
-            </div> -->
           </div>
         </section>
       </nav>
-
       <main id="main-display" data-list-id="null">
         <section id="pending-tasks">
-          <header>
+          <header class="section-header">
             <h1 id="list-title"></h1>
-            <button type="button" id="show-add-task">Add task</button>
+            <button type="button" id="show-add-task" class="add-plus">Add task</button>
           </header>
-          <div class="task-list" id="pending-task-list">
-            <!-- <div class="task-item">
-              <div class="left">
-                <button type="button" class="check">Check</button>
-                <div class="details">
-                  <h2>Name</h2>
-                  <p>Desc</p>
-                </div>
-              </div>
-              <div class="right">
-                <div class="details">
-                  <h2>Date</h2>
-                  <p>Project</p>
-                </div>
-                  <div class="item-buttons">
-                    <button type="button"></button>
-                    <button type="button"></button>
-                  </div>
-                </div>
-              </div> -->
-          </div>
+          <div class="task-list" id="pending-task-list"></div>
         </section>
-
         <section id="completed-tasks">
-          <header>Completed</header>
-          <button type="button" id="remove-completed">Remove</button>
+          <header class="section-header">
+            <h1>Completed</h1>
+            <button type="button" id="remove-completed">Remove</button>
+          </header>
           <div class="task-list" id="completed-task-list"></div>
         </section>
       </main>
-
       <section id="menus">
         <div id="add-task-menu" class="display-none">
           <form id="add-task-form">
