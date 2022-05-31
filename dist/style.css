@@ -94,7 +94,6 @@ nav::-webkit-scrollbar,
 
 footer {
   min-height: 40px;
-  background-color: lightpink;
 }
 
 /* General rules */
@@ -193,6 +192,10 @@ button {
   border-radius: 4px;
   font-weight: 600;
   font-size: 1rem;
+}
+
+button:focus {
+  outline: none;
 }
 
 .menu-buttons {
@@ -679,4 +682,20 @@ input[type="radio"]:checked + div.priority-icon {
   background-color: var(--background-0);
   outline: 2px solid var(--primary-highlight);
   transition: background-color 0.2s ease;
+}
+
+/* Footer */
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--background-3);
+  color: #EBEFF5;
+  font-size: 1rem;
+}
+
+footer a {
+  text-decoration: none;
+  font-weight: 600;
+  color: #8FBCBB;
 }
