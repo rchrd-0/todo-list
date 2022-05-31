@@ -110,24 +110,47 @@ const setActive = (id) => {
   const projectItems = document.querySelectorAll('.project-item');
 
   if (id < 4) {
-    [...projectItems].forEach(pI => pI.parentElement.classList.remove('set-active'));
+    [...projectItems].forEach((pI) =>
+      pI.parentElement.classList.remove('set-active')
+    );
     [...homeItems].forEach((i) => {
-      if ((Number(i.dataset.sortId)) === idNum) {
+      if (Number(i.dataset.sortId) === idNum) {
         i.classList.add('set-active');
       } else {
         i.classList.remove('set-active');
       }
     });
   } else {
-    [...homeItems].forEach(i => i.classList.remove('set-active'));
-    [...projectItems].forEach(pI => {
-      if ((Number(pI.dataset.projectId)) === idNum) {
+    [...homeItems].forEach((i) => i.classList.remove('set-active'));
+    [...projectItems].forEach((pI) => {
+      if (Number(pI.dataset.projectId) === idNum) {
         pI.parentElement.classList.add('set-active');
       } else {
         pI.parentElement.classList.remove('set-active');
       }
-    })
+    });
   }
+};
+
+const generateEmptySplash = () => {
+  const pendingTaskList = document.querySelector('#pending-task-list');
+  const emptySplash = document.createElement('div');
+  const text = [
+    'All good!',
+    'All done!',
+    'What\'s the plan?',
+    'Let\'s get started!',
+    'Whew, no tasks!',
+    'Good to go!',
+  ];
+  const illus = ['illus-0', 'illus-1', 'illus-2', 'illus-3', 'illus-4'];
+  emptySplash.classList.add('empty-splash');
+  emptySplash.setAttribute(
+    'id',
+    illus[Math.floor(Math.random() * illus.length)]
+  );
+  emptySplash.textContent = text[Math.floor(Math.random() * text.length)];
+  pendingTaskList.append(emptySplash);
 };
 
 const clearTaskList = () => {
@@ -151,17 +174,24 @@ const renderTaskList = (listName, listId, taskList) => {
   mainDisplay.dataset.listId = listId;
 
   clearTaskList();
-  taskList.forEach((task) => {
-    const listItem = createTaskItem(task);
-    if (task.completed) {
-      completedTaskList.insertBefore(
-        listItem,
-        completedTaskList.firstElementChild
-      );
-    } else {
-      pendingTaskList.insertBefore(listItem, pendingTaskList.firstElementChild);
-    }
-  });
+  if (taskList.length < 1) {
+    generateEmptySplash();
+  } else {
+    taskList.forEach((task) => {
+      const listItem = createTaskItem(task);
+      if (task.completed) {
+        completedTaskList.insertBefore(
+          listItem,
+          completedTaskList.firstElementChild
+        );
+      } else {
+        pendingTaskList.insertBefore(
+          listItem,
+          pendingTaskList.firstElementChild
+        );
+      }
+    });
+  }
   updateSelectValues();
   storeTaskList();
   storeProjectList();
