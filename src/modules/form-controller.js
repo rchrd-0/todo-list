@@ -92,6 +92,7 @@ const showEdit = (id) => {
     showEditMenu.classList.remove('display-none');
   }
   getTaskInfo(id);
+  insertTop(showEditMenu);
   validateNameInput(editTaskForm);
 };
 

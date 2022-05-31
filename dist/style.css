@@ -12,8 +12,6 @@
   --background-3: #4c566a;
 
   --yellow: #ffdba6;
-  --red: #ffb0a6;
-
   --valid: #c5e9e9;
   --valid-bold: #006b6c;
   --invalid: #ffd7e1;
@@ -527,8 +525,25 @@ nav {
 #menus {
   display: flex;
   flex-direction: column;
-  padding: 50px;
+  margin: 30px 50px 0 0;
   gap: 20px;
+}
+
+.menu-header {
+  font-size: 1.4rem;
+  margin: 10px 0;
+  padding-bottom: 10px;
+  font-weight: 600;
+}
+
+#add-task-menu header {
+  color: var(--invalid);
+  border-bottom: 2px solid var(--invalid);
+}
+
+#edit-task-menu header {
+  color: var(--yellow);
+  border-bottom: 2px solid var(--yellow);
 }
 
 #menus form {
@@ -537,6 +552,7 @@ nav {
 }
 
 #menus > div {
+  padding: 0 20px;
   border: 1px solid black;
 }
 
