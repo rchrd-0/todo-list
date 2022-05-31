@@ -59,35 +59,41 @@ body {
 
 /* High-level layout */
 #main-container {
+  flex: 1;
   display: flex;
-  width: 100vw;
-  height: calc(100vh - 40px);
+  width: 100%;
 }
 
 #main-display {
-  width: 800px;
-  margin: 30px 80px;
-  flex-shrink: 0;
+  min-width: none;
+  margin: 0 80px;
+  flex: 0 0 800px;
 }
 
 nav {
   flex: 0 0 360px;
+}
+
+#menus {
+  flex: 1 0 300px;
+}
+
+nav,
+#main-display,
+#menus {
   overflow: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
 
-nav::-webkit-scrollbar {
+nav::-webkit-scrollbar,
+#main-display::-webkit-scrollbar,
+#menus::-webkit-scrollbar {
   display: none;
 }
 
-#menus {
-  flex: 1;
-}
-
 footer {
-  width: 100vw;
-  height: 40px;
+  min-height: 40px;
   background-color: lightpink;
 }
 
@@ -133,10 +139,14 @@ select {
   font-family: inherit;
   color: var(--text);
   border-radius: 4px;
-  width: 100%;
   background-color: initial;
-  /* border: 2px solid var(--background-2); */
   border: 1px solid var(--text);
+}
+
+input[type="text"],
+textarea {
+  width: 100%;
+  flex-shrink: 0;
 }
 
 input:focus,
@@ -161,6 +171,11 @@ textarea {
   resize: none;
 }
 
+.text-label {
+  width: 60px;
+  font-size: 1.1rem;
+}
+
 button,
 .section-header,
 .home-item,
@@ -177,10 +192,11 @@ button {
   padding: 6px 12px;
   border-radius: 4px;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 .menu-buttons {
+  width: 100%;
   display: flex;
   gap: 12px;
 }
@@ -394,9 +410,12 @@ button.cancel:hover {
 /* Nav bar */
 
 nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background-color: #373e4d;
   color: var(--text);
-  font-size: 1.3rem;
+  font-size: 1.2rem;
 }
 
 .home-item,
@@ -474,6 +493,13 @@ nav {
 
 /* Task list display */
 
+#top-header {
+  padding-top: 30px;
+  position: sticky;
+  background-color: var(--background-0);
+  top: 0;
+}
+
 .task-list {
   margin: 20px 0;
   display: flex;
@@ -527,10 +553,11 @@ nav {
   flex-direction: column;
   margin: 30px 50px 0 0;
   gap: 20px;
+  color: var(--text);
 }
 
 .menu-header {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   margin: 10px 0;
   padding-bottom: 10px;
   font-weight: 600;
@@ -547,38 +574,109 @@ nav {
 }
 
 #menus form {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: 36px 80px repeat(4, 36px);
+  grid-template-columns: 55px auto;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 10px;
+  row-gap: 8px;
+  padding-bottom: 10px;
+}
+
+#menus input {
+  height: 34px;
+}
+
+#menus input[name="name"] {
+  grid-area: 1 / 1 / 2 / -1;
+}
+
+#menus textarea {
+  grid-area: 2 / 1 / 3 / -1;
+}
+
+.text-label {
+  grid-column: 1 / 2;
+}
+
+.menu-buttons {
+  grid-area: 6 / 1 / span 1 / span 2;
 }
 
 #menus > div {
   padding: 0 20px;
-  border: 1px solid black;
-}
-
-.task-priority {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.input-label {
-  width: 100%;
+  border: 1px solid var(--primary-neutral);
+  border-radius: 4px;
+  background: #373e4d;
 }
 
 input[type="radio"] {
   position: absolute;
   width: 0;
   height: 0;
+  padding: 0;
   opacity: 0;
 }
 
+.task-priority {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 .priority-icon {
-  width: 25px;
-  height: 25px;
-  outline: 1px solid black;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  outline: 1px solid #373e4d;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  transition: background-color 0.2s ease;
+  position: relative;
+}
+
+.priority-icon .tooltip {
+  visibility: hidden;
+  z-index: 1;
+}
+
+.priority-icon:hover {
+  background-color: var(--background-0);
+  transition: background-color 0.2s ease;
+  outline: 1px solid var(--text);
+}
+
+.priority-icon:hover .tooltip {
+  font-size: 1rem;
+  position: absolute;
+  visibility: visible;
+  top: 120%;
+  text-align: center;
+  background-color: var(--background-0);
+  border: 1px solid var(--text);
+  padding: 6px 8px;
+  border-radius: 4px;
+  width: 60px;
+  margin-left: -16px;
+}
+
+.priority-none {
+  background-image: url("./assets/icons/flag-none.svg");
+}
+.priority-low {
+  background-image: url("./assets/icons/flag-low.svg");
+}
+.priority-high {
+  background-image: url("./assets/icons/flag-high.svg");
 }
 
 input[type="radio"]:checked + div.priority-icon {
-  outline: 1px solid red;
+  background-color: var(--background-0);
+  outline: 2px solid var(--primary-highlight);
+  transition: background-color 0.2s ease;
 }

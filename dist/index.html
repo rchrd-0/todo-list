@@ -11,101 +11,108 @@
   <body>
     <div id="main-container">
       <nav>
-        <div id="logo"></div>
-        <section id="home-nav">
-          <div class="home-item" data-sort-id="0">
-            <div class="nav-icon all-icon"></div>
-            <span>All</span>
-          </div>
-          <div class="home-item" data-sort-id="3">
-            <div class="nav-icon inbox-icon"></div>
-            <span>Inbox</span>
-          </div>
-          <div class="home-item" data-sort-id="1">
-            <div class="nav-icon today-icon"></div>
-            <span>Today</span>
-          </div>
-          <div class="home-item" data-sort-id="2">
-            <div class="nav-icon week-icon"></div>
-            <span>Next 7 Days</span>
-          </div>
-        </section>
-        <section id="project-nav">
-          <div id="project-header" class="section-header">
-            <h1>Projects</h1>
-            <button type="button" id="show-add-project" class="add-plus">Add project</button>
-          </div>
-          <div id="add-project-menu" class="display-none">
-            <form id="add-project-form">
-              <input
-                type="text"
-                name="name"
-                id="project-name-add"
-                placeholder="Project name"
-                required
-              />
-              <div class="menu-buttons">
-                <button
-                  type="button"
-                  id="submit-add-project"
-                  class="submit"
-                  disabled
-                >
-                  Add
-                </button>
-                <button
-                  type="button"
-                  class="cancel"
-                  data-menu="add-project-menu"
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
-          <div id="project-list">
-            <div id="rename-project-menu" class="display-none">
-              <form id="rename-project-form" data-rename-id="null">
-                <div class="nav-icon project-icon"></div>
+        <div class="content">
+          <div id="logo"></div>
+          <section id="home-nav">
+            <div class="home-item" data-sort-id="0">
+              <div class="nav-icon all-icon"></div>
+              <span>All</span>
+            </div>
+            <div class="home-item" data-sort-id="3">
+              <div class="nav-icon inbox-icon"></div>
+              <span>Inbox</span>
+            </div>
+            <div class="home-item" data-sort-id="1">
+              <div class="nav-icon today-icon"></div>
+              <span>Today</span>
+            </div>
+            <div class="home-item" data-sort-id="2">
+              <div class="nav-icon week-icon"></div>
+              <span>Next 7 Days</span>
+            </div>
+          </section>
+          <section id="project-nav">
+            <div id="project-header" class="section-header">
+              <h1>Projects</h1>
+              <button type="button" id="show-add-project" class="add-plus">
+                Add project
+              </button>
+            </div>
+            <div id="add-project-menu" class="display-none">
+              <form id="add-project-form">
                 <input
                   type="text"
                   name="name"
-                  id="project-name-edit"
+                  id="project-name-add"
                   placeholder="Project name"
                   required
                 />
                 <div class="menu-buttons">
                   <button
                     type="button"
-                    id="submit-rename-project"
+                    id="submit-add-project"
                     class="submit"
                     disabled
                   >
-                    Save
+                    Add
                   </button>
                   <button
                     type="button"
                     class="cancel"
-                    data-menu="rename-project-menu"
+                    data-menu="add-project-menu"
                   >
                     Cancel
                   </button>
                 </div>
               </form>
             </div>
-          </div>
-        </section>
+            <div id="project-list">
+              <div id="rename-project-menu" class="display-none">
+                <form id="rename-project-form" data-rename-id="null">
+                  <div class="nav-icon project-icon"></div>
+                  <input
+                    type="text"
+                    name="name"
+                    id="project-name-edit"
+                    placeholder="Project name"
+                    required
+                  />
+                  <div class="menu-buttons">
+                    <button
+                      type="button"
+                      id="submit-rename-project"
+                      class="submit"
+                      disabled
+                    >
+                      Save
+                    </button>
+                    <button
+                      type="button"
+                      class="cancel"
+                      data-menu="rename-project-menu"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </section>
+        </div>
+        <footer></footer>
       </nav>
       <main id="main-display" data-list-id="null">
         <section id="pending-tasks">
-          <header class="section-header">
+          <header class="section-header" id="top-header">
             <h1 id="list-title"></h1>
-            <button type="button" id="show-add-task" class="add-plus">Add task</button>
+            <button type="button" id="show-add-task" class="add-plus">
+              Add task
+            </button>
           </header>
           <div class="task-list" id="pending-task-list"></div>
         </section>
         <section id="completed-tasks">
-          <header class="section-header">
+          <header class="section-header" id="completed-header">
             <h1>Completed</h1>
             <button type="button" id="remove-completed">Remove</button>
           </header>
@@ -129,13 +136,20 @@
               form="add-task-form"
               name="description"
               id="task-description-add"
-              rows="4"
+              rows="3"
               placeholder="Description"
             ></textarea>
-            <input type="date" name="date" id="task-date-add" />
+            <label for="task-date-add" class="text-label">Date</label>
+            <input
+              type="date"
+              name="date"
+              id="task-date-add"
+              onkeydown="return false"
+            />
+            <label for="project-add" class="text-label">Project</label>
             <select name="project" id="project-add"></select>
+            <span class="text-label">Priority</span>
             <div class="task-priority">
-              <div class="input-label">Priority</div>
               <label for="priority-high-add">
                 <input
                   type="radio"
@@ -143,7 +157,9 @@
                   id="priority-high-add"
                   value="high"
                 />
-                <div class="priority-icon">High</div>
+                <div class="priority-icon priority-high">
+                  <span class="tooltip">High</span>
+                </div>
               </label>
               <label for="priority-low-add">
                 <input
@@ -152,7 +168,9 @@
                   id="priority-low-add"
                   value="low"
                 />
-                <div class="priority-icon">Low</div>
+                <div class="priority-icon priority-low">
+                  <span class="tooltip">Low</span>
+                </div>
               </label>
               <label for="priority-none-add">
                 <input
@@ -162,7 +180,9 @@
                   value="none"
                   checked
                 />
-                <div class="priority-icon">None</div>
+                <div class="priority-icon priority-none">
+                  <span class="tooltip">None</span>
+                </div>
               </label>
             </div>
             <div class="menu-buttons">
@@ -191,13 +211,20 @@
               form="edit-task-form"
               name="description"
               id="task-description-edit"
-              rows="4"
+              rows="3"
               placeholder="Description"
             ></textarea>
-            <input type="date" name="date" id="task-date-edit" />
+            <label for="task-date-edit" class="text-label">Date</label>
+            <input
+              type="date"
+              name="date"
+              id="task-date-edit"
+              onkeydown="return false"
+            />
+            <label for="project-edit" class="text-label">Project</label>
             <select name="project" id="project-edit"></select>
+            <span class="text-label">Priority</span>
             <div class="task-priority">
-              <div class="input-label">Priority</div>
               <label for="priority-high-edit">
                 <input
                   type="radio"
@@ -205,7 +232,7 @@
                   id="priority-high-edit"
                   value="high"
                 />
-                <div class="priority-icon">High</div>
+                <div class="priority-icon priority-high"></div>
               </label>
               <label for="priority-low-edit">
                 <input
@@ -214,7 +241,7 @@
                   id="priority-low-edit"
                   value="low"
                 />
-                <div class="priority-icon">Low</div>
+                <div class="priority-icon priority-low"></div>
               </label>
               <label for="priority-none-edit">
                 <input
@@ -224,12 +251,12 @@
                   value="none"
                   checked
                 />
-                <div class="priority-icon">None</div>
+                <div class="priority-icon priority-none"></div>
               </label>
             </div>
             <div class="menu-buttons">
               <button type="button" id="submit-edit" class="submit" disabled>
-                Edit
+                Save
               </button>
               <button type="button" class="cancel" data-menu="edit-task-menu">
                 Cancel
@@ -239,6 +266,5 @@
         </div>
       </section>
     </div>
-    <footer></footer>
   </body>
 </html>
