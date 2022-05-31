@@ -514,35 +514,6 @@ nav {
   font-size: 1.2rem;
 }
 
-.empty-splash {
-  color: var(--primary-neutral);
-  font-weight: 600;
-  font-size: 1.5rem;
-  text-align: center;
-  margin: 0 auto;
-  width: 250px;
-  height: 250px;
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-}
-
-#illus-0 {
-  background-image: url('./assets/illus-0.svg');
-}
-#illus-1 {
-  background-image: url('./assets/illus-1.svg');
-}
-#illus-2 {
-  background-image: url('./assets/illus-2.svg');
-}
-#illus-3 {
-  background-image: url('./assets/illus-3.svg');
-}
-#illus-4 {
-  background-image: url('./assets/illus-4.svg');
-}
-
 /* Task items */
 
 .task-item {
@@ -727,4 +698,35 @@ footer a {
   text-decoration: none;
   font-weight: 600;
   color: #8FBCBB;
+}
+
+/* Empty splash & illustrations */
+
+.empty-splash {
+  width: 300px;
+  height: 300px;
+  color: var(--primary-neutral);
+  font-size: 1.5rem;
+  text-align: center;
+  font-weight: 600;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin: 0 auto;
+}
+
+#illus-0 {
+  background-image: url('./assets/illus-0.svg')
+}
+#illus-1 {
+  background-image: url('./assets/illus-1.svg')
+}
+#illus-2 {
+  background-image: url('./assets/illus-2.svg')
+}
+#illus-3 {
+  background-image: url('./assets/illus-3.svg')
+}
+#illus-4 {
+  background-image: url('./assets/illus-4.svg')
 }
