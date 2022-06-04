@@ -1,24 +1,35 @@
 import _ from 'lodash';
 import { taskMaster } from './tasks';
 
-const projectFactory = (id, name) => {
-  const taskList = () => taskMaster.findProject(id);
-  return {
-    taskList,
-    get id() {
-      return id;
-    },
-    set id(newId) {
-      id = newId;
-    },
-    get name() {
-      return name;
-    },
-    set name(newName) {
-      name = newName;
-    },
-  };
-};
+class Project {
+  constructor(id, name) {
+    this.id = id;
+    this.name = name;
+  }
+
+  taskList() {
+    return taskMaster.findProject(this.id)
+  }
+}
+
+// const projectFactory = (id, name) => {
+//   const taskList = () => taskMaster.findProject(id);
+//   return {
+//     taskList,
+//     get id() {
+//       return id;
+//     },
+//     set id(newId) {
+//       id = newId;
+//     },
+//     get name() {
+//       return name;
+//     },
+//     set name(newName) {
+//       name = newName;
+//     },
+//   };
+// };
 
 const projectMaster = (() => {
   const projectList = [];
@@ -58,13 +69,13 @@ function initializeProjects() {
     let projects = JSON.parse(localStorage.getItem('projectList'));
     projects = _.drop(projects, 1);
     projects.forEach((project) => {
-      projectMaster.push(projectFactory(...Object.values(project)));
+      projectMaster.push(new Project(...Object.values(project)));
     });
   }
 }
 
 export {
-  projectFactory,
+  Project,
   projectMaster,
   saveToLocalStorage as storeProjectList,
   initializeProjects,

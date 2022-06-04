@@ -1,60 +1,76 @@
 import _ from 'lodash';
 import { parseJSON } from 'date-fns';
 
-const taskFactory = (
-  id,
-  name,
-  description,
-  date,
-  projectId,
-  priority,
-  completed = false
-) => {
-  return {
-    get id() {
-      return id;
-    },
-    set id(newId) {
-      id = newId;
-    },
-    get name() {
-      return name;
-    },
-    set name(newName) {
-      name = newName;
-    },
-    get description() {
-      return description;
-    },
-    set description(newDescription) {
-      description = newDescription;
-    },
-    get date() {
-      return date;
-    },
-    set date(newDate) {
-      date = newDate;
-    },
-    get projectId() {
-      return projectId;
-    },
-    set projectId(newProjectId) {
-      projectId = newProjectId;
-    },
-    get priority() {
-      return priority;
-    },
-    set priority(newPriority) {
-      priority = newPriority;
-    },
-    get completed() {
-      return completed;
-    },
-    set completed(newCompleted) {
-      completed = newCompleted;
-    },
-  };
-};
+class Task {
+  constructor(id, name, description, date, projectId, priority, completed = false) {
+    this.id = id;
+    this.name = name;
+    this.description = description;
+    this.date = date;
+    this.projectId = projectId;
+    this.priority = priority;
+    this.completed = completed;
+  }
+
+  toggleStatus() {
+    this.completed = !this.completed
+  }
+}
+
+// const taskFactory = (
+//   id,
+//   name,
+//   description,
+//   date,
+//   projectId,
+//   priority,
+//   completed = false
+// ) => {
+//   return {
+//     get id() {
+//       return id;
+//     },
+//     set id(newId) {
+//       id = newId;
+//     },
+//     get name() {
+//       return name;
+//     },
+//     set name(newName) {
+//       name = newName;
+//     },
+//     get description() {
+//       return description;
+//     },
+//     set description(newDescription) {
+//       description = newDescription;
+//     },
+//     get date() {
+//       return date;
+//     },
+//     set date(newDate) {
+//       date = newDate;
+//     },
+//     get projectId() {
+//       return projectId;
+//     },
+//     set projectId(newProjectId) {
+//       projectId = newProjectId;
+//     },
+//     get priority() {
+//       return priority;
+//     },
+//     set priority(newPriority) {
+//       priority = newPriority;
+//     },
+//     get completed() {
+//       return completed;
+//     },
+//     set completed(newCompleted) {
+//       completed = newCompleted;
+//     },
+//   };
+// };
 
 const taskMaster = (() => {
   const taskList = [];
@@ -98,13 +114,13 @@ function initializeTasks() {
     const tasks = JSON.parse(localStorage.getItem('taskList'));
     tasks.forEach((task) => {
       task.date = task.date ? parseJSON(task.date) : null;
-      taskMaster.push(taskFactory(...Object.values(task)));
+      taskMaster.push(new Task(...Object.values(task)));
     });
   }
 }
 
 export {
-  taskFactory,
+  Task,
   taskMaster,
   saveToLocalStorage as storeTaskList,
   initializeTasks,

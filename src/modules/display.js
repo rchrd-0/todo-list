@@ -356,7 +356,7 @@ function clearCompletedTasks() {
 
 function completeTask(id) {
   const thisTask = taskMaster.findTask(id);
-  thisTask.completed = !thisTask.completed;
+  thisTask.toggleStatus();
   reloadList();
 }
 

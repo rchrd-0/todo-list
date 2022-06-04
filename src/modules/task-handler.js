@@ -1,5 +1,5 @@
 import { parseISO } from 'date-fns';
-import { taskFactory, taskMaster } from './tasks';
+import { Task, taskMaster } from './tasks';
 import { showAdd, hideMenu } from './form-controller';
 import { reloadList } from './display';
 
@@ -13,7 +13,7 @@ const createTask = () => {
     'input[name=priority-add]:checked'
   ).value;
   const date = !taskDate ? null : parseISO(taskDate);
-  const newTask = taskFactory(
+  const newTask = new Task(
     taskId,
     taskName,
     taskDescription,

@@ -1,4 +1,4 @@
-import { projectFactory, projectMaster } from './projects';
+import { Project, projectMaster } from './projects';
 import { hideMenu, showAddProject, squashEdit, updateSelectOptions } from './form-controller';
 import { reloadList, addProjectToList } from './display';
 
@@ -14,7 +14,7 @@ const createProject = () => {
   const projectId = projectMaster.read().length + 3;
   const projectName = document.querySelector('#project-name-add').value;
 
-  const newProject = projectFactory(projectId, projectName);
+  const newProject = new Project(projectId, projectName);
   projectMaster.push(newProject);
   hideMenu('add-project-menu');
   addProjectToList(newProject);
@@ -44,7 +44,7 @@ const initializeButtonEvents = () => {
 };
 
 const initializeInbox = () => {
-  const inbox = projectFactory(3, 'Inbox');
+  const inbox = new Project(3, 'Inbox');
   projectMaster.push(inbox);
 };
 
