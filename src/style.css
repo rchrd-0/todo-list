@@ -234,7 +234,7 @@ button:focus {
 }
 
 button.add-plus {
-  background-image: url("./assets/icons/icn-plus-0.svg");
+  background-image: url("./assets/icons/icn-plus0.svg");
   background-repeat: no-repeat;
   background-size: 22px;
   background-position: 6px center;
@@ -242,7 +242,7 @@ button.add-plus {
 }
 
 button.add-plus:hover {
-  background-image: url("./assets/icons/icn-plus-1.svg");
+  background-image: url("./assets/icons/icn-plus1.svg");
 }
 
 button.submit {
@@ -304,27 +304,27 @@ button.cancel:hover {
 }
 
 .project-edit {
-  background-image: url("./assets/icons/icn-edit-1.svg");
+  background-image: url("./assets/icons/icn-edit1.svg");
 }
 
 .project-remove {
-  background-image: url("./assets/icons/icn-trash-0.svg");
+  background-image: url("./assets/icons/icn-trash0.svg");
 }
 
 .all-icon {
-  background-image: url("./assets/icons/icn-list-0.svg");
+  background-image: url("./assets/icons/icn-list0.svg");
 }
 
 .inbox-icon {
-  background-image: url("./assets/icons/icn-inbox-0.svg");
+  background-image: url("./assets/icons/icn-inbox0.svg");
 }
 
 .today-icon {
-  background-image: url("./assets/icons/icn-today-0.svg");
+  background-image: url("./assets/icons/icn-today0.svg");
 }
 
 .week-icon {
-  background-image: url("./assets/icons/icn-week-0.svg");
+  background-image: url("./assets/icons/icn-week0.svg");
 }
 
 .project-icon {
@@ -370,11 +370,11 @@ button.cancel:hover {
 }
 
 .item-edit {
-  background-image: url("./assets/icons/icn-edit-0.svg");
+  background-image: url("./assets/icons/icn-edit0.svg");
 }
 
 .item-remove {
-  background-image: url("./assets/icons/icn-trash-0.svg");
+  background-image: url("./assets/icons/icn-trash0.svg");
 }
 
 .item-check[data-completed="false"][data-priority="none"] {
