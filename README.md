@@ -1,5 +1,5 @@
 # todo-list
-![Site preview](dist/assets/site-preview.png)
+![Site preview](./site-preview.png)
 A HTML, CSS and Javascript project from The Odin Project's [curriculum](https://www.theodinproject.com/lessons/node-path-javascript-todo-list). Main focus:
 * Webpack, ES6 Modules, Web Storage API
 
