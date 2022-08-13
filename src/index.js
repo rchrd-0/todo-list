@@ -1,3 +1,4 @@
+import './style.css';
 import { initializeUI } from './modules/display';
 import { initializeProjectHandler } from './modules/project-handler';
 import { intializeTaskHandler } from './modules/task-handler';

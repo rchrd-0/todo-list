@@ -138,8 +138,8 @@ const generateEmptySplash = () => {
   const text = [
     'All good!',
     'All done!',
-    'What\'s the plan?',
-    'Let\'s get started!',
+    "What's the plan?",
+    "Let's get started!",
     'Whew, no tasks!',
     'Good to go!',
   ];

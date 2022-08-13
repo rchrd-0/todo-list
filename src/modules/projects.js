@@ -8,7 +8,7 @@ class Project {
   }
 
   taskList() {
-    return taskMaster.findProject(this.id)
+    return taskMaster.findProject(this.id);
   }
 }
 

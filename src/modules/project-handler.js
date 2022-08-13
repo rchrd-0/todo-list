@@ -1,5 +1,10 @@
 import { Project, projectMaster } from './projects';
-import { hideMenu, showAddProject, squashEdit, updateSelectOptions } from './form-controller';
+import {
+  hideMenu,
+  showAddProject,
+  squashEdit,
+  updateSelectOptions,
+} from './form-controller';
 import { reloadList, addProjectToList } from './display';
 
 const findInList = (id) => {
