@@ -1,6 +1,6 @@
 import { parseISO } from 'date-fns';
 import { Task, taskMaster } from './tasks';
-import { showAdd, hideMenu } from './form-controller';
+import { showAdd, hideModal } from './form-controller';
 import { reloadList } from './display';
 
 const createTask = () => {
@@ -23,7 +23,7 @@ const createTask = () => {
   );
   taskMaster.push(newTask);
 
-  hideMenu('add-task-menu');
+  hideModal('add-task-menu');
   reloadList();
 };
 
@@ -47,7 +47,7 @@ const editTask = () => {
   thisTask.projectId = taskProject;
   thisTask.priority = taskPriority;
 
-  hideMenu('edit-task-menu');
+  hideModal('edit-task-menu');
   reloadList();
 };
 

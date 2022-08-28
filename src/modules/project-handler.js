@@ -2,7 +2,7 @@ import { Project, projectMaster } from './projects';
 import {
   hideMenu,
   showAddProject,
-  squashEdit,
+  // squashEdit,
   updateSelectOptions,
 } from './form-controller';
 import { reloadList, addProjectToList } from './display';
@@ -32,7 +32,7 @@ const renameProject = () => {
   const projectTitle = findInList(renameId).querySelector('span');
   project.name = newName;
   projectTitle.textContent = newName;
-  project.taskList().forEach((task) => squashEdit(task.id));
+  // project.taskList().forEach((task) => squashEdit(task.id));
   updateSelectOptions();
   reloadList();
 

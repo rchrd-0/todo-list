@@ -2,13 +2,19 @@ import { format, startOfToday } from 'date-fns';
 import { taskMaster } from './tasks';
 import { projectMaster } from './projects';
 
-const insertTop = (menu) => {
-  const menusSection = document.querySelector('#menus');
-  menusSection.insertBefore(menu, menusSection.firstElementChild);
+// const insertTop = (menu) => {
+//   const menusSection = document.querySelector('#menus');
+//   menusSection.insertBefore(menu, menusSection.firstElementChild);
+// };
+
+const toggleBackdrop = () => {
+  const backdrop = document.querySelector('#backdrop');
+  backdrop.classList.toggle('visible');
 };
 
 const updateSelectOptions = () => {
-  const menus = document.querySelector('#menus');
+  // const menus = document.querySelector('#menus');
+  const menus = document.querySelector('#main-display');
   const forms = menus.querySelectorAll('form');
   forms.forEach((form) => {
     const projectSelect = form.querySelector('select');
@@ -49,14 +55,15 @@ const showAdd = () => {
   const addTaskForm = addTaskMenu.querySelector('form');
   const dateInput = addTaskForm.querySelector('input[type="date"]');
   addTaskForm.reset();
-  addTaskMenu.classList.remove('display-none');
+  addTaskMenu.classList.toggle('visible');
+  addTaskMenu.dataset.activeModal = true;
 
   if (Number(currentList) === 1) {
     dateInput.value = format(startOfToday(), 'yyyy-MM-dd');
   }
 
+  toggleBackdrop();
   updateSelectValues();
-  insertTop(addTaskMenu);
   validateNameInput(addTaskForm);
 };
 
@@ -87,12 +94,13 @@ const getTaskInfo = (id) => {
 const showEdit = (id) => {
   const showEditMenu = document.querySelector('#edit-task-menu');
   const editTaskForm = showEditMenu.querySelector('form');
+
+  showEditMenu.classList.toggle('visible');
+  showEditMenu.dataset.activeModal = true;
+
   editTaskForm.dataset.taskId = id;
-  if (showEditMenu.classList.contains('display-none')) {
-    showEditMenu.classList.remove('display-none');
-  }
+  toggleBackdrop();
   getTaskInfo(id);
-  insertTop(showEditMenu);
   validateNameInput(editTaskForm);
 };
 
@@ -111,7 +119,7 @@ const showRename = (id, projectItem) => {
   const thisItem = projectItem.parentElement;
 
   if (renameProjectForm.dataset.projectId !== 'null') {
-    hideMenu('rename-project-menu')
+    hideMenu('rename-project-menu');
   }
 
   renameProjectForm.dataset.renameId = id;
@@ -131,36 +139,56 @@ const hideRename = (menu) => {
   projectList.insertBefore(renameMenu, projectList.firstElementChild);
 };
 
+// const squashEdit = (id) => {
+//   const editTaskForm = document.querySelector('#edit-task-form');
 
+//   if (![id, editTaskForm.dataset.taskId].includes('null')) {
+//     const idNum = Number(id);
+//     const elementId = Number(editTaskForm.dataset.taskId);
 
-const squashEdit = (id) => {
-  const editTaskForm = document.querySelector('#edit-task-form');
+//     if (idNum === elementId) {
+//       hideMenu(editTaskForm.parentElement.getAttribute('id'));
+//     }
+//   }
+// };
 
-  if (![id, editTaskForm.dataset.taskId].includes('null')) {
-    const idNum = Number(id);
-    const elementId = Number(editTaskForm.dataset.taskId);
-
-    if (idNum === elementId) {
-      hideMenu(editTaskForm.parentElement.getAttribute('id'));
-    }
-  }
-};
 const setMinDate = () => {
   const dateInputs = document.querySelectorAll('input[type=date]');
   const today = format(new Date(), 'yyyy-MM-dd');
   dateInputs.forEach((input) => input.setAttribute('min', today));
 };
 
+function hideModal(btn) {
+  let modal;
+  switch (btn) {
+    case 'add-task-menu':
+      modal = document.querySelector('#add-task-menu');
+      break;
+    case 'edit-task-menu':
+      modal = document.querySelector('#edit-task-menu');
+      modal.firstElementChild.dataset.taskId = null;
+      break;
+    // No default
+  }
+
+  modal.classList.toggle('visible');
+  modal.dataset.activeModal = false;
+
+  const form = modal.querySelector('form');
+  setTimeout(() => form.reset(), 350);
+  toggleBackdrop();
+}
+
 function hideMenu(btn) {
   let menu;
   switch (btn) {
-    case 'add-task-menu':
-      menu = document.querySelector('#add-task-menu');
-      break;
-    case 'edit-task-menu':
-      menu = document.querySelector('#edit-task-menu');
-      menu.firstElementChild.dataset.taskId = null;
-      break;
+    // case 'add-task-menu':
+    //   menu = document.querySelector('#add-task-menu');
+    //   break;
+    // case 'edit-task-menu':
+    //   menu = document.querySelector('#edit-task-menu');
+    //   menu.firstElementChild.dataset.taskId = null;
+    //   break;
     case 'add-project-menu':
       menu = document.querySelector('#add-project-menu');
       break;
@@ -174,6 +202,15 @@ function hideMenu(btn) {
   const form = menu.querySelector('form');
   form.reset();
   menu.classList.add('display-none');
+}
+
+const initializeModalHide = () => {
+  const cancelBtns = document.querySelectorAll('.cancel-modal');
+  cancelBtns.forEach((button) => {
+    button.addEventListener('click', (e) => {
+      hideModal(e.target.dataset.menu);
+    });
+  });
 };
 
 const initializeButtonEvents = () => {
@@ -196,6 +233,7 @@ const initializeForms = () => {
 };
 
 const initializeFormController = () => {
+  initializeModalHide();
   initializeButtonEvents();
   initializeForms();
 };
@@ -206,8 +244,9 @@ export {
   showAddProject,
   showEdit,
   hideMenu,
+  hideModal,
   updateSelectOptions,
   updateSelectValues,
-  squashEdit,
+  // squashEdit,
   showRename,
 };

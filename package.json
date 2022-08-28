@@ -8,6 +8,7 @@
     "watch": "webpack --watch",
     "build": "webpack"
   },
+  "devtool": "inline-source-map",
   "author": "",
   "license": "ISC",
   "devDependencies": {

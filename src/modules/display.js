@@ -18,8 +18,8 @@ import {
   showRename,
   updateSelectOptions,
   updateSelectValues,
-  squashEdit,
-  hideMenu,
+  hideModal,
+  // hideMenu,
 } from './form-controller';
 
 const generateTaskEvents = (elements, task) => {
@@ -338,11 +338,10 @@ function removeProject(projectItem) {
     reloadList();
   }
   updateProjectList(projectId);
-  hideMenu('edit-task-menu');
+  // hideMenu('edit-task-menu');
 }
 
 function removeTask(id) {
-  squashEdit(id);
   taskMaster.remove(id);
   reloadList();
 }
@@ -383,7 +382,17 @@ function retrieveStorage() {
   storedProjectList.forEach((project) => addProjectToList(project));
 }
 
+function backdropHideSelf() {
+  const backdrop = document.querySelector('#backdrop');
+
+  backdrop.addEventListener('click', () => {
+    const activeModal = document.querySelector('[data-active-modal="true"]');
+    hideModal(activeModal.id);
+  });
+}
+
 function initializeUI() {
+  backdropHideSelf();
   retrieveStorage();
   initializeFormController();
   initializeButtonEvents();
