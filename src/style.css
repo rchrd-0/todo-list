@@ -64,6 +64,7 @@ body {
 
 /* High-level layout */
 #main-container {
+  position: relative;
   flex: 1;
   display: flex;
   width: 100%;
@@ -99,10 +100,13 @@ footer {
   min-height: 40px;
 }
 
+/* Page header */
+
 #page-header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  padding: 0 20px;
   width: 100%;
   z-index: 2;
   position: fixed;
@@ -110,6 +114,7 @@ footer {
   background-color: var(--background-2);
   height: 60px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  user-select: none;
 }
 
 #logo {
@@ -123,6 +128,54 @@ footer {
   content: url("./assets/logo.svg");
   height: 80%;
   width: auto;
+}
+
+#hamburger {
+  visibility: hidden;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  position: relative;
+  cursor: pointer;
+  transition: opacity 0.2s ease-in-out;
+}
+
+#hamburger > div {
+  position: absolute;
+  width: 2.1rem;
+  height: 3px;
+  background-color: var(--text);
+  border-radius: 4px;
+  transition: all 0.3s ease-in-out, opacity 0.2s ease-in-out;
+}
+
+#ham-1 {
+  top: calc(25% - 1.5px);
+}
+
+#ham-2 {
+  top: calc(50% - 1.5px);
+}
+
+#ham-3 {
+  top: calc(75% - 1.5px);
+}
+
+#ham-1.open {
+  top: calc(50% - 1.5px);
+  transform: rotate(135deg);
+}
+
+#ham-2.open {
+  opacity: 0;
+  transform: translate(-70%);
+}
+
+#ham-3.open {
+  top: calc(50% - 1.5px);
+  transform: rotate(-135deg);
 }
 
 /* General rules */
@@ -476,7 +529,7 @@ nav {
 }
 
 #home-nav {
-  margin-top: 8px;
+  margin-top: 20px;
 }
 
 #project-nav {
@@ -825,13 +878,49 @@ footer a {
 @media (max-width: 920px) {
   #main-container {
     flex-direction: column;
+    max-width: 100vw;
+  }
+
+  #hamburger {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  nav {
+    position: absolute;
+    width: 100%;
+    height: 420px;
+    top: -450px;
+    transition: top 0.3s ease-in-out;
+  }
+
+  nav.slide-open {
+    top: 0;
+  }
+
+  #home-nav,
+  #project-nav {
+    margin-top: 5px;
   }
 
   #main-display {
-    /* margin-top: 10px; */
+    position: absolute;
+    width: calc(100% - 40px);
+    top: 0;
+    transition: top 0.3s ease-in-out;
+    margin: 0 20px;
   }
 
-  /* #logo {
-    position: sticky;
-  } */
+  #main-display.slide-open {
+    top: 410px;
+  }
+
+  .left {
+    max-width: calc(100% - 220px);
+  }
+
+  .right {
+    max-width: 200px;
+  }
 }

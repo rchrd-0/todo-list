@@ -10,10 +10,15 @@
   </head>
   <body>
     <header id="page-header">
+      <div id="hamburger">
+        <div id="ham-1" class="open"></div>
+        <div id="ham-2" class="open"></div>
+        <div id="ham-3" class="open"></div>
+      </div>
       <img alt="todo list icon" />
     </header>
     <div id="main-container">
-      <nav>
+      <nav class="slide-open">
         <div class="content">
           <section id="home-nav">
             <div class="home-item" data-sort-id="0">
@@ -112,7 +117,7 @@
           >
         </footer> -->
       </nav>
-      <main id="main-display" data-list-id="null">
+      <main id="main-display" class="slide-open" data-list-id="null">
         <div id="backdrop"></div>
         <section id="pending-tasks">
           <header class="section-header" id="top-header">

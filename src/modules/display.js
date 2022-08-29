@@ -366,13 +366,28 @@ function isWithinWeek(task) {
   });
 }
 
-function initializeButtonEvents() {
+function initializeEvents() {
   const homeLinks = document.querySelectorAll('.home-item');
   homeLinks.forEach((link) => {
     link.addEventListener('click', () => openList(link.dataset.sortId));
   });
+
   const removeCompleted = document.querySelector('#remove-completed');
   removeCompleted.addEventListener('click', clearCompletedTasks);
+
+  const backdrop = document.querySelector('#backdrop');
+  backdrop.addEventListener('click', () => {
+    const activeModal = document.querySelector('[data-active-modal="true"]');
+    hideModal(activeModal.id);
+  });
+
+  const hamburger = document.querySelector('#hamburger');
+  const ham = document.querySelectorAll('#hamburger > div');
+  const [...navDisplay] = document.querySelectorAll('#main-display, nav');
+  hamburger.addEventListener('click', () => {
+    ham.forEach((div) => div.classList.toggle('open'));
+    navDisplay.forEach((div) => div.classList.toggle('slide-open'));
+  });
 }
 
 function retrieveStorage() {
@@ -382,20 +397,12 @@ function retrieveStorage() {
   storedProjectList.forEach((project) => addProjectToList(project));
 }
 
-function backdropHideSelf() {
-  const backdrop = document.querySelector('#backdrop');
-
-  backdrop.addEventListener('click', () => {
-    const activeModal = document.querySelector('[data-active-modal="true"]');
-    hideModal(activeModal.id);
-  });
-}
+// function backdropHideSelf() {}
 
 function initializeUI() {
-  backdropHideSelf();
   retrieveStorage();
   initializeFormController();
-  initializeButtonEvents();
+  initializeEvents();
   window.addEventListener('load', () => openList(3));
 }
 
