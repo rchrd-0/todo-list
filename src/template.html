@@ -9,10 +9,12 @@
     <script src="./index.bundle.js" defer></script>
   </head>
   <body>
+    <header id="page-header">
+      <img alt="todo list icon" />
+    </header>
     <div id="main-container">
       <nav>
         <div class="content">
-          <div id="logo"></div>
           <section id="home-nav">
             <div class="home-item" data-sort-id="0">
               <div class="nav-icon all-icon"></div>
@@ -99,7 +101,7 @@
             </div>
           </section>
         </div>
-        <footer>
+        <!-- <footer>
           <span
             >Made by
             <a href="https://github.com/rchrd-0" target="_blank">RCHRD</a>
@@ -108,7 +110,7 @@
               The Odin Project</a
             ></span
           >
-        </footer>
+        </footer> -->
       </nav>
       <main id="main-display" data-list-id="null">
         <div id="backdrop"></div>
@@ -144,7 +146,7 @@
               form="add-task-form"
               name="description"
               id="task-description-add"
-              rows="5"
+              rows=""
               placeholder="Description"
             ></textarea>
             <label for="task-date-add" class="text-label">Date</label>
