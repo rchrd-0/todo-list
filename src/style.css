@@ -111,7 +111,6 @@ body {
 
 nav {
   flex: 0 0 360px;
-  z-index: 1;
 }
 
 nav,
@@ -128,10 +127,6 @@ nav::-webkit-scrollbar,
   display: none;
 }
 
-footer {
-  min-height: 40px;
-}
-
 /* Page header */
 
 #page-header {
@@ -140,7 +135,7 @@ footer {
   align-items: center;
   padding: 0 50px 0 20px;
   width: 100%;
-  z-index: 2;
+  z-index: 3;
   position: fixed;
   top: 0;
   background-color: var(--background-2);
@@ -618,6 +613,7 @@ nav {
   color: var(--text);
   font-size: 1.2rem;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  z-index: 2;
 }
 
 .content > section {
@@ -779,7 +775,7 @@ nav {
   inset: 0;
   background-color: #000;
   opacity: 0;
-  z-index: 3;
+  z-index: 4;
   pointer-events: none;
   transition: opacity 0.1s ease-in-out;
 }
@@ -802,7 +798,7 @@ nav {
   opacity: 0;
   transition: right 0.2s ease-in-out, opacity 0.3s ease-in-out;
   pointer-events: none;
-  z-index: 3;
+  z-index: 4;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
     rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
@@ -948,20 +944,50 @@ input[type="radio"]:checked + div.priority-icon {
 }
 
 /* Footer */
-/* footer {
+footer {
+  align-self: center;
   display: flex;
-  justify-content: center;
   align-items: center;
-  background-color: var(--background-2);
-  color: #ebeff5;
+  margin-bottom: 15px;
+  width: fit-content;
+  padding: 8px 10px;
+  user-select: none;
+  border-radius: 8px;
+  background-color: #d8dee9;
+  color: #003069;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
   font-size: 1rem;
 }
 
+body.light footer {
+  background-color: #2e3440;
+  color: #d7e2fa;
+}
+
 footer a {
-  text-decoration: none;
+  display: flex;
+  align-items: center;
   font-weight: 600;
-  color: #8fbcbb;
-} */
+  color: #004691;
+  text-decoration: none;
+}
+
+body.light footer a {
+  color: #5193e3;
+}
+
+footer img {
+  width: 20px;
+  height: auto;
+  content: url("./assets/icons/github.svg");
+  filter: invert(12%) sepia(98%) saturate(3526%) hue-rotate(201deg)
+    brightness(95%) contrast(101%);
+}
+
+body.light footer img {
+  filter: invert(54%) sepia(35%) saturate(950%) hue-rotate(176deg)
+    brightness(95%) contrast(87%);
+}
 
 /* Empty splash & illustrations */
 
