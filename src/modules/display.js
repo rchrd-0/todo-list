@@ -388,6 +388,12 @@ function initializeEvents() {
     ham.forEach((div) => div.classList.toggle('open'));
     navDisplay.forEach((div) => div.classList.toggle('slide-open'));
   });
+
+  const modeToggle = document.querySelector('#mode-toggle');
+  const imgs = modeToggle.querySelectorAll('img');
+  modeToggle.addEventListener('click', () => {
+    imgs.forEach((img) => img.classList.toggle('mode-hidden'));
+  });
 }
 
 function retrieveStorage() {

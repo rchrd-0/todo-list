@@ -106,7 +106,7 @@ footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 50px 0 20px;
   width: 100%;
   z-index: 2;
   position: fixed;
@@ -128,6 +128,49 @@ footer {
   content: url("./assets/logo.svg");
   height: 80%;
   width: auto;
+}
+
+#mode-toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 50px;
+  height: 60px;
+  /* background-color: grey; */
+  cursor: pointer;
+}
+
+#mode-toggle > img {
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  pointer-events: none;
+}
+
+#sun {
+  transform: translateX(-50%);
+  content: url("./assets/icons/sun.svg");
+  transition: left 0.3s ease-in-out, opacity 0.1s ease-in-out;
+  left: 50%;
+  opacity: 1;
+}
+
+#moon {
+  transform: translateX(50%);
+  content: url("./assets/icons/moon.svg");
+  right: 50%;
+  transition: right 0.3s ease-in-out, opacity 0.1s ease-in-out;
+}
+
+#sun.mode-hidden {
+  left: -50%;
+  opacity: 0;
+}
+
+#moon.mode-hidden {
+  right: -50%;
+  opacity: 0;
 }
 
 #hamburger {
@@ -876,6 +919,10 @@ footer a {
 }
 
 @media (max-width: 920px) {
+  #page-header {
+    padding-right: 20px;
+  }
+
   #main-container {
     flex-direction: column;
     max-width: 100vw;
