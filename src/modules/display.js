@@ -32,6 +32,9 @@ const generateTaskEvents = (elements, task) => {
       checkCircle.dataset.taskId = task.id;
       checkCircle.dataset.priority = task.priority;
       checkCircle.dataset.completed = task.completed;
+      if (checkCircle.dataset.priority === 'none') {
+        checkCircle.classList.add('filter');
+      }
       checkCircle.addEventListener('click', () =>
         completeTask(checkCircle.dataset.taskId)
       );
@@ -269,7 +272,7 @@ const createProjectItem = (project) => {
   const projectLeft = document.createElement('div');
   projectLeft.classList.add('project-left');
   const navIcon = document.createElement('div');
-  navIcon.classList.add('nav-icon', 'project-icon');
+  navIcon.classList.add('nav-icon', 'project-icon', 'filter');
   const projectName = document.createElement('span');
   projectName.textContent = project.name;
   projectLeft.append(navIcon, projectName);
@@ -391,8 +394,10 @@ function initializeEvents() {
 
   const modeToggle = document.querySelector('#mode-toggle');
   const imgs = modeToggle.querySelectorAll('img');
+  const body = document.querySelector('body');
   modeToggle.addEventListener('click', () => {
     imgs.forEach((img) => img.classList.toggle('mode-hidden'));
+    body.classList.toggle('light');
   });
 }
 
